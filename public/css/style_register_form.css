@@ -1,0 +1,117 @@
+
+.container  .welcome{
+    margin-bottom: 3rem;
+    text-align: center;
+    font-weight: 400;
+}
+
+.container  .welcome span{
+    margin-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #067a7a;
+}
+
+.login_part{
+    padding: 10px;
+    margin: 5rem;
+}
+
+.login_part_text_iner{
+    margin-left: 10rem;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5rem;
+    padding-bottom: 10rem;
+    border: 1px solid linear-gradient( to right, #6253e1, #852d91, #a3a1ff, #f24645 );
+    border-radius: 20px;
+    background: linear-gradient( to right, #6253e1, #852d91, #a3a1ff, #f24645 );
+    color: #fff;
+    box-shadow: 0 4px 15px 0 rgba(144, 32, 148, 0.75);
+}
+
+.login_part_text_iner h2{
+    font-weight: bold;
+}
+
+.login_part_text_iner p{
+    font-size: 14px;
+    font-weight: inherit;
+    color: #f0f0f0;
+    opacity: 0.5;
+}
+
+.createAccount{
+    width: 200px;
+    font-size: 24px;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    border: 1px solid linear-gradient( to right, #29323c, #205083, #2b5876, #4e4376 );
+    background: linear-gradient( to right, #29323c, #205083, #2b5876, #4e4376 );
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+    opacity: 0.8;
+}
+
+.createAccount:hover{
+    background: linear-gradient( to right, #2b5876, #4e4376, #430550, #f00bb6 );
+    color: springgreen;
+    opacity: 1.2;
+}
+
+
+
+.login_part_form_iner h3{
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.form .inputBox{
+    width: 100%;
+    margin-top: 20px;
+}
+
+.form input{
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #29323c;
+    outline: none;
+    font-size: 16px;
+    color: #000;
+    padding: 5px 0;
+}
+
+.form .btnRegister{
+    width: 200px;
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    border: 1px solid linear-gradient( to right, #29323c, #205083, #2b5876, #4e4376 );
+    background: linear-gradient( to right, #29323c, #205083, #2b5876, #4e4376 );
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+    opacity: 0.8;
+}
+
+.form .btnRegister:hover{
+    background: linear-gradient( to right, #2b5876, #4e4376, #430550, #f00bb6 );
+    color: springgreen;
+    opacity: 1.2;
+}
+
+footer{
+    background: #f7f6f2;
+}
