@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //set cho máy biết mình dùng view engine là ejs
 app.set('view engine', 'ejs')
+app.set('views', './views')
 
 app.use('/account', accountRouter);
 app.use('/shop', shopRouter);
@@ -29,8 +30,12 @@ app.use('/contact', contactRouter);
 app.use('/', homeRouter);
 app.use('/cart', cartRouter);
 
-
-
+//khi người dùng nhập api sai sẽ gửi chạy cái naỳ
+app.use((req, res) => {
+    res.json({
+        msg : "Nhập link cc gì v" 
+    })
+})
 
 app.listen(port, () => {
     console.log(`Sever is listening on port ${3000}`);
