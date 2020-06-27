@@ -9,6 +9,6 @@ mongoose.connect('mongodb://localhost:27017/project', {useNewUrlParser: true, us
     else {
         console.log("Connected successfully");
     }
-});
+})
 
 module.exports = mongoose;

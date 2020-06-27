@@ -38,5 +38,5 @@ app.use((req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Sever is listening on port ${3000}`);
+    console.log(`Sever listening on port ${3000}`);
 })
