@@ -4,7 +4,7 @@
  * Copyright 2011-2018 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -2522,7 +2522,7 @@ input[type="button"].btn-block {
 .dropdown,
 .dropleft {
   position: relative; }
-
+/* 
 .dropdown-toggle::after {
   display: inline-block;
   margin-left: 0.255em;
@@ -2531,7 +2531,7 @@ input[type="button"].btn-block {
   border-top: 0.3em solid;
   border-right: 0.3em solid transparent;
   border-bottom: 0;
-  border-left: 0.3em solid transparent; }
+  border-left: 0.3em solid transparent; } */
 
 .dropdown-toggle:empty::after {
   margin-left: 0; }
@@ -2704,6 +2704,7 @@ input[type="button"].btn-block {
   .dropdown-item:last-child {
     border-bottom-right-radius: calc(0.25rem - 1px);
     border-bottom-left-radius: calc(0.25rem - 1px); }
+    /* hover user  */
   .dropdown-item:hover, .dropdown-item:focus {
     color: #16181b;
     text-decoration: none;
@@ -8072,6 +8073,7 @@ h1, h2, h3, h4, h5,
     padding-bottom: 1.5rem;
     padding-left: 20px;
     padding-right: 20px;
+    font-weight: bold;
     color: #000000;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -8152,18 +8154,20 @@ h1, h2, h3, h4, h5,
     left: 0;
     top: 0;
     margin-top: -130px;
+    
     background: #fff !important;
     -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1); }
     .ftco-navbar-light.scrolled .nav-item.active > a {
       color: #82ae46 !important; }
+      /* icon giỏ hàng khi lăn chuột */
     .ftco-navbar-light.scrolled .nav-item.cta > a {
-      color: #fff !important;
-      background: #82ae46;
+      color: #82ae46 !important;
+      /* background: #82ae46; */
       border: none !important; }
       .ftco-navbar-light.scrolled .nav-item.cta > a span {
         display: inline-block;
-        color: #fff !important; }
+        color: #000 !important; }
     .ftco-navbar-light.scrolled .nav-item.cta.cta-colored span {
       border-color: #82ae46; }
     @media (max-width: 991.98px) {
@@ -8187,8 +8191,8 @@ h1, h2, h3, h4, h5,
       font-size: 16px;
       letter-spacing: .1em; }
     .ftco-navbar-light.scrolled .nav-link {
-      padding-top: 0.9rem !important;
-      padding-bottom: 0.9rem !important;
+      /* padding-top: 0.9rem !important;
+      padding-bottom: 0.9rem !important; */
       color: #000000 !important; }
       .ftco-navbar-light.scrolled .nav-link.active {
         color: #82ae46 !important; }
@@ -10027,8 +10031,33 @@ textarea.form-control {
 
 
 
+/* avartar user  */
+
+#dropdownId{
+  position: relative;
+  padding: 0;
+  margin: 15px;
+}
+
+#dropdownId .username_avatar{
+  position: absolute;
+  width: auto;
+  height: 15px;
+  color: black;
+  font-size: 12px;
+  display: block;
+  opacity: 0;
+}
+
+#dropdownId img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 
 footer .icon_mxh{
   text-align: center;
   list-style: none;
 }
+
