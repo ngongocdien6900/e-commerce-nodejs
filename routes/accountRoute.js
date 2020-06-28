@@ -1,14 +1,18 @@
 const express = require('express');
 const route = express.Router();
-const registerController = require('../controllers/registerController');
-const checkRegister = require('../middleware/checkRegister');
+const accountController = require('../controllers/accountController');
+const accountMiddleware = require('../middleware/accountMiddleware');
 
-route.get('/login', (req, res, next) => {
-    res.render('login');
-})
+route.get('/login', accountController.getLogin)
 
-route.get('/register', registerController.getRegister)
+route.post('/login', accountController.postLogin)
 
-route.post('/register', registerController.postRegister)
+route.get('/register', accountController.getRegister)
+
+route.post('/register', accountController.postRegister)
+
+
+//test
+route.get('/test', accountController.test)
 
 module.exports = route;

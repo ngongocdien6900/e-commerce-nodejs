@@ -19,5 +19,17 @@ module.exports = {
         else {
             next();
         } 
-    }
+     }
+    //,
+    // validationLogin : (req, res, next) => {
+    //     if(req.body.username == null || req.body.password == null)
+    //     {
+    //         res.json({
+    //             error : true,
+    //             msg   : 'Không được để trống username hoặc password'
+    //         })
+    //     }else {
+    //         next()
+    //     }
+    // }
 }

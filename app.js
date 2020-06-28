@@ -12,6 +12,7 @@ const accountRouter = require('./routes/accountRoute');
 const shopRouter = require('./routes/shopRoute');
 const contactRouter = require('./routes/contactRoute');
 const cartRouter = require('./routes/cartRoute');
+const cookieParser = require('cookie-parser');
 
 //public thư mục này lên
 app.use('/public', express.static('public'));
@@ -19,6 +20,9 @@ app.use('/public', express.static('public'));
 //2 cái này phải có khi dùng body-parser
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+//cookie
+app.use(cookieParser())
 
 //set cho máy biết mình dùng view engine là ejs
 app.set('view engine', 'ejs')
@@ -31,7 +35,7 @@ app.use('/', homeRouter);
 app.use('/cart', cartRouter);
 
 //khi người dùng nhập api sai sẽ gửi chạy cái naỳ
-app.use((req, res) => {
+app.use((req, res, next) => {
     res.json({
         msg : "Nhập link cc gì v" 
     })
