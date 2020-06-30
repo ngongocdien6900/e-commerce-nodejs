@@ -13,6 +13,7 @@ const shopRouter = require('./routes/shopRoute');
 const contactRouter = require('./routes/contactRoute');
 const cartRouter = require('./routes/cartRoute');
 const cookieParser = require('cookie-parser');
+const accountMiddleware = require('./middleware/accountMiddleware');
 
 //public thư mục này lên
 app.use('/public', express.static('public'));
@@ -28,10 +29,19 @@ app.use(cookieParser())
 app.set('view engine', 'ejs')
 app.set('views', './views')
 
+
+
 app.use('/account', accountRouter);
+// app.use(accountMiddleware.isLogin)
 app.use('/shop', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
+
+app.get('/product_detail', (req, res) => {
+    res.render('product-detail')
+})
+
+
 app.use('/cart', cartRouter);
 
 //khi người dùng nhập api sai sẽ gửi chạy cái naỳ
@@ -42,5 +52,5 @@ app.use((req, res, next) => {
 })
 
 app.listen(port, () => {
-    console.log(`Sever listening on port ${3000}`);
+    console.log(`Sever listening on port ${port}`);
 })

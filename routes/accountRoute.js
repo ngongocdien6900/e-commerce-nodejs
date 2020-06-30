@@ -12,7 +12,4 @@ route.get('/register', accountController.getRegister)
 route.post('/register', accountController.postRegister)
 
 
-//test
-route.get('/test', accountController.test)
-
 module.exports = route;
