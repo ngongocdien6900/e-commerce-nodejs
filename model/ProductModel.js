@@ -24,33 +24,21 @@ const ProductSchema = new Schema({
 
 const ProductModel = mongoose.model('product', ProductSchema);
 
+
+
+// ProductModel.create({
+//     productName : 'Đậu hà lan',
+//     price       : 4000,
+//     quality     : 12,
+//     image       : 'http://rausachdatxanh.com/san-pham/khoai-lang.html'
+// }).then(data => {
+//     console.log(data)
+// })
+
+// ProductModel.find({}).then(data => console.log(data))
 module.exports = ProductModel;
 
-// const CategorySchema = new Schema({
-//     categoryName : {
-//         type : String,
-//         require : true
-//     },
-//     product : {
-//         type : mongoose.Schema.Types.ObjectId,
-//         //kiểu như nó tham chiếu đến bảng nào
-//         ref  : 'product'
-//     }
-// }, {
-//     collection : 'category'
-// })
 
 
-// const CategoryModel = mongoose.model('category', CategorySchema);
-
-
-
-// CategoryModel.find({
-//     categoryName : 'Dưa'
-// })
-// .populate('product')
-// .then(data => {
-//     console.log(data);
-// })
 
 

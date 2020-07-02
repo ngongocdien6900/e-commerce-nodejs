@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Edit</h2>
+    <form action="/admin/edit" method="post" enctype="multipart/form-data"> 
+        <!-- hidden nó sẽ không hiện ra màn hình , 
+        1. Đầu tiên , không ai đi hiện id ra , nên sẽ hidden đi
+        2. Sẽ dùng nó để truyền id qua bên kia , để biết nó sẽ update thằng nào
+        -->
+        <input type="hidden" name="idProduct" value="<%- product._id %>"/>
+        <input type="text" name="productName" placeholder="Tên sản phẩm" value="<%- product.productName %>"/></br>    </br>     
+        <input type="text" name="price" placeholder="Giá" value="<%- product.price %>"/></br>        </br> 
+        <input type="text" name="quality" placeholder="Số lượng (kg)" value="<%- product.quality %>"/></br>     </br>    
+        <img src="/public/upload/<%- product.image %>" width="100" alt="">
+        <input type="file" name="productImage"></br>        </br> 
+        <!-- Khi bấm nút sửa , cái route này sẽ post dữ liệu về đường dẫn mà mình khai báo ở action -->
+        <input type="submit" value="Sửa">
+        
+    </form>
+</body>
+</html>

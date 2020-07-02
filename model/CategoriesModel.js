@@ -27,3 +27,4 @@ CategoryModel.find({
 })
 
 module.exports = CategoryModel;
+
