@@ -58,11 +58,13 @@ module.exports = {
             username : req.body.username
         })
         .then(data => {
+            console.log(data)
             bcrypt.compare(req.body.password, data.password, (err, result) => {
                 if(result){
-                    let token = jwt.sign({_id : data.id}, 'ngocdien', {algorithm : 'HS256', expiresIn : "1d"})
+                    console.log(result)
                     res.json({
-                        access_token : token
+                        error : false,
+                        msg   : 'Login OK'
                     })
                 }
                 else {
@@ -72,7 +74,7 @@ module.exports = {
         }).catch(err => {
             console.log(err);
         })
-    }
+    },
 }
 
 

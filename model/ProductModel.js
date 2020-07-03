@@ -24,18 +24,6 @@ const ProductSchema = new Schema({
 
 const ProductModel = mongoose.model('product', ProductSchema);
 
-
-
-// ProductModel.create({
-//     productName : 'Đậu hà lan',
-//     price       : 4000,
-//     quality     : 12,
-//     image       : 'http://rausachdatxanh.com/san-pham/khoai-lang.html'
-// }).then(data => {
-//     console.log(data)
-// })
-
-// ProductModel.find({}).then(data => console.log(data))
 module.exports = ProductModel;
 
 
