@@ -7,24 +7,19 @@ const CategorySchema = new Schema({
         type : String,
         require : true
     },
-    product : {
+    products : [{
+        //id là id của thằng con nó
         type : mongoose.Schema.Types.ObjectId,
         //kiểu như nó tham chiếu đến bảng nào
         ref  : 'product'
-    }
+    }]
 }, {
     collection : 'category'
 })
 
 const CategoryModel = mongoose.model('category', CategorySchema);
 
-CategoryModel.find({
-    categoryName : 'Dưa'
-})
-.populate('product')
-.then(data => {
-    console.log(data);
-})
+
 
 module.exports = CategoryModel;
 

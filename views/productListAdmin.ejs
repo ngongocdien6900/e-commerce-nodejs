@@ -47,7 +47,7 @@
             </div>
             <div class="button">
                 <a href="admin/edit/<%- product[i]._id %>"> Edit</a>
-                <a style="padding: 20px;" href="admin/delete/<%- product[i]._id %>"> Delete</a>
+                <a onclick="return confirm('Bạn có muốn xóa sản phẩm <%= product[i].productName %> không ?')" style="padding: 20px;" href="admin/delete/<%- product[i]._id %>"> Delete</a>
                 <a href="/admin/add">Thêm sp mới</a>
             </div>
             <% } %>

@@ -1,4 +1,5 @@
 const ProductModel = require('../model/ProductModel');
+const Category = require('../model/CategoryModel');
 
 const multer = require('multer');
 const { response } = require('express');
@@ -28,20 +29,19 @@ let upload = multer({
 }).single("productImage");
 
 module.exports = {
-    getProduct : (req, res) => {
+    getProduct: (req, res) => {
         ProductModel.find({})
-        .then(product => {
-            //trang chu admin
-            res.render('admin', {
-                // truyền qua bên kia
-                product
+            .then(product => {
+                res.render('admin', {
+                    // truyền qua bên kia
+                    product
+                })
             })
-        })
     },
-    getAddProduct : (req, res) => {
+    getAddProduct: (req, res) => {
         res.render('addProduct');
     },
-    postAddProduct : (req, res) => {
+    postAddProduct: (req, res) => {
         upload(req, res, err => {
             if (err instanceof multer.MulterError) {
                 res.json({
@@ -80,38 +80,38 @@ module.exports = {
             }
         })
     },
-    getEditProduct : (req, res) => {
+    getEditProduct: (req, res) => {
         ProductModel.findById(
             // đã là tìm theo id thì truyền theo id thôi
             req.params.id
-        , (err, product) => {
-            if(err) {
-                res.json({
-                    err : 0,
-                    msg : err
-                })
-            }
-            // render ra trang edit và truyền kèm theo cái sản phẩm tìm ra đó
-            else {
-                res.render('editProduct', {
-                    product
-                })
-            }
-        })
+            , (err, product) => {
+                if (err) {
+                    res.json({
+                        err: 0,
+                        msg: err
+                    })
+                }
+                // render ra trang edit và truyền kèm theo cái sản phẩm tìm ra đó
+                else {
+                    res.render('editProduct', {
+                        product
+                    })
+                }
+            })
     },
-    postEditProduct : (req, res) => {
+    postEditProduct: (req, res) => {
 
         //req.body || req.file gọi bên trong upload vì dùng multer vì form có ectype
         // xử lí upload file (Check xem khách hàng có chọn file mới hay không ?)
         upload(req, res, err => {
             //1. Không có file mới , update mấy cái kia , k update image
-            if(!req.file) {
+            if (!req.file) {
                 ProductModel.updateOne({
-                    _id : req.body.idProduct
+                    _id: req.body.idProduct
                 }, {
-                    productName : req.body.productName,
-                    price       : req.body.price,
-                    quality     : req.body.quality
+                    productName: req.body.productName,
+                    price: req.body.price,
+                    quality: req.body.quality
                 }, err => {
                     if (err) {
                         res.json({
@@ -139,12 +139,12 @@ module.exports = {
                 } else {
                     // khi người dùng chọn file
                     ProductModel.updateOne({
-                        _id : req.body.idProduct
+                        _id: req.body.idProduct
                     }, {
-                        productName : req.body.productName,
-                        price       : req.body.price,
-                        quality     : req.body.quality,
-                        image       : req.file.filename
+                        productName: req.body.productName,
+                        price: req.body.price,
+                        quality: req.body.quality,
+                        image: req.file.filename
                     }, err => {
                         if (err) {
                             res.json({
@@ -158,6 +158,94 @@ module.exports = {
                         }
                     })
                 }
+            }
+        })
+    },
+    getDeleteProduct: (req, res) => {
+        ProductModel.deleteOne({
+            _id: req.params.id
+        }, err => {
+            if (err) {
+                res.json({
+                    err: 0,
+                    msg: err
+                })
+            }
+            else {
+                res.redirect('/account')
+            }
+        })
+    },
+
+    //Category
+    getCategory: (req, res) => {
+        Category.find().
+            then(data => {
+                res.render('listCategory', {
+                    listCategory: data
+                });
+            })
+    },
+    getAddCategory: (req, res) => {
+        res.render('addCategory');
+    },
+    postAddCategory: (req, res) => {
+        let category = new Category({
+            categoryName: req.body.category,
+            products: []
+        });
+        category.save(err => {
+            if (err) {
+                res.json({
+                    "KQ": 0,
+                    msg: err
+                })
+            } else {
+                res.redirect('/admin/category')
+            }
+        })
+    }
+    ,
+    getEditCategory: (req, res) => {
+        Category.findById(req.params.id, (err, data) => {
+            if (err) {
+                res.json({
+                    "KQ": 0,
+                    msg: err
+                })
+            } else {
+                res.render('editCategory', { category: data })
+            }
+        })
+    },
+    postEditCategory: (req, res) => {
+        Category.updateOne({
+            _id: req.body.idCategory
+        }, {
+            categoryName: req.body.category
+        }, err => {
+            if (err) {
+                res.json({
+                    "KQ": 0,
+                    msg: err
+                })
+            } else {
+                res.redirect('/admin/category')
+            }
+        })
+    },
+    getDeleteCategory: (req, res) => {
+        Category.deleteOne({
+            _id: req.params.id
+        }, err => {
+            if (err) {
+                res.json({
+                    err: 0,
+                    msg: err
+                })
+            }
+            else {
+                res.redirect('/admin/category')
             }
         })
     }
