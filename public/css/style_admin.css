@@ -1,0 +1,75 @@
+
+.ftco-section {
+    padding: 1em 0;
+    position: relative;
+}
+
+.main_admin .container{
+    margin-bottom: 5rem;
+    padding: 3rem;
+    background: rgb(230, 223, 223);
+    border: 1px solid rgb(230, 223, 223);
+    border-radius: 20px;
+}
+
+.main_admin .container h1{
+    text-align: center;
+    font-weight: bold;
+    color: #82ae46;
+    margin-bottom: 3rem;
+    position: relative;
+}
+/* thêm sản phẩm btn  */
+.main_admin .container .themSP .btn{
+    font-size: 16px;
+    right: 0;
+    position: absolute;
+    transform: translate(-260%,-200%);
+}
+
+/* kẻ boder  */
+.main_admin .container .row {
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+.main_admin .container .list{
+    border: 1px solid #000;
+}
+
+/*------------------- tiêu đề */
+.main_admin .container .tieude .items{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    text-align: center;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ------------------ danh sách sản phẩm  */
+
+/* tên giá số lượng */
+.main_admin .container .danhsach .items{
+    text-align: center;
+    font-weight: bold;
+    color: #0a363457;
+    font-size: 16px;
+    padding-top: 5rem;
+}
+/* hình ảnh */
+.main_admin .container .danhsach .ImageSP img{
+    height: 210px;
+    width: 100%;
+    padding: 2rem;
+    padding-left: 3rem;
+}
+
+/* hành động */
+.main_admin .container .danhsach .acts{
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+.main_admin .container .danhsach .acts .act{
+    font-size: 16px;
+}

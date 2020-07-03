@@ -1,0 +1,24 @@
+.main_add .container .themMoi{
+    text-align: center;
+    margin: 5rem 0;
+    padding: 5rem 0;
+    border: 1px solid linear-gradient( to right, #6253e1, #852d91, #121224, #f24645 );
+    border-radius: 20px;
+    background: linear-gradient( to right, #6253e1, #852d91, #a3a1ff, #f24645 );
+    color: #fff;
+    box-shadow: 0 4px 15px 0 rgba(144, 32, 148, 0.75);
+}
+
+.main_add .container .themMoi h1{
+    color: #000;
+    font-weight: bold;
+}
+
+.main_add .container .themMoi input{
+    margin-top: 3rem;
+    font-size: 20px;
+}
+
+.main_add .container .themMoi input[type="file"]{
+    font-size: 14px;
+}
