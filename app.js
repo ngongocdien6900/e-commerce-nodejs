@@ -8,7 +8,6 @@ const port = 3000;
 //dùng để upload file image
 const multer = require('multer')
 
-
 //router
 const homeRouter = require('./routes/homeRoute');
 const accountRouter = require('./routes/accountRoute');
@@ -16,9 +15,8 @@ const shopRouter = require('./routes/shopRoute');
 const contactRouter = require('./routes/contactRoute');
 const cartRouter = require('./routes/cartRoute');
 const adminRouter = require('./routes/adminRoute');
+
 // const accountMiddleware = require('./middleware/accountMiddleware');
-
-
 
 //public thư mục này lên
 app.use('/public', express.static('public'));
@@ -35,17 +33,10 @@ app.set('view engine', 'ejs')
 app.set('views', './views')
 
 app.use('/account', accountRouter);
-app.use('/shop', shopRouter);
+app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
 app.use('/admin', adminRouter)
-
-
-// --- detail
-app.get('/product_detail', (req, res) => {
-    res.render('product-detail')
-})
-
 app.use('/cart', cartRouter);
 
 
