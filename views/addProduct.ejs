@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Thêm mới</h2>
-    <form action="/admin/add" method="post" enctype="multipart/form-data">       
-        <input type="text" name="productName" placeholder="Tên sản phẩm" /></br>    </br>     
-        <input type="text" name="price" placeholder="Giá"/></br>        </br> 
-        <input type="text" name="quality" placeholder="Số lượng (kg)"/></br>     </br>    
-        <input type="file" name="productImage"></br>        </br> 
-        <input type="submit" value="Thêm">
-    </form>
+<%- include('layouts/header'); -%>
+
+<body class="goto-here">
+	<!-- Start nav -->
+	<%- include('./layouts/nav_admin.ejs'); -%>
+	<!-- END nav -->
+	<section class="ftco-section main_add">
+		<div class="container">
+            <div class="themMoi">
+                <h1>Thêm Mới Sản Phẩm</h1>
+            <form action="/admin/add" method="post" enctype="multipart/form-data">  
+                <input type="text" name="productName" placeholder="Tên Sản Phẩm" />
+                <br>
+                <input type="text" name="price" placeholder="Giá (VNĐ)"/>
+                <br>
+                <input type="text" name="quality" placeholder="Số Lượng (kg)"/>
+                <br>
+                <input type="file" name="productImage">
+                </br>
+                <button type="submit" class="btn btn-primary">Thêm</button>
+            </form>
+        </div>
+            </div>
+	</section>
+	<!-- Start Footer -->
+	<%- include('./layouts/footer.ejs'); -%>
+	<!-- End -->
+
+	<!-- loader -->
+	<%- include('./layouts/loader.ejs'); -%>
+	<!-- end -->
+
+	<!-- Start Script -->
+	<%- include('./layouts/script.ejs'); -%>
+	<!-- End -->
 
 </body>
+
 </html>

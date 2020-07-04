@@ -32,7 +32,7 @@ module.exports = {
     getProduct: (req, res) => {
         ProductModel.find({})
             .then(product => {
-                res.render('productListAdmin', {
+                res.render('admin', {
                     // truyền qua bên kia
                     product
                 })
@@ -71,7 +71,9 @@ module.exports = {
                     }
                     else {
                         res.json({
-                            error: 1
+                            //Them thành công thì chọn thêm tiếp hoặc về admin
+                            error: 'Thêm thành công :' + req.body.productName + ':!'
+                            
                         })
                     }
                 })
