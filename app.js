@@ -41,7 +41,9 @@ app.use('/cart', cartRouter);
 
 
 
-
+app.get('/cc', (req, res) => {
+    res.render('admin')
+})
 
 app.listen(port, () => {
     console.log(`Sever listening on port ${port}`);

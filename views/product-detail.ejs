@@ -40,11 +40,8 @@
 
 					</div> -->
 					<p class="price"><span><%= product.price %></span></p>
-					<!-- <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It
-						is a paradisematic country, in which roasted parts of sentences fly into your mouth. Text should
-						turn around and return to its own, safe country. But nothing the copy said could convince her
-						and so it didn’t take long until.
-					</p> -->
+					<p><%- product.description %>
+					</p>
 					<div class="row mt-4">
 						<div class="col-md-6">
 							<div class="form-group d-flex">
@@ -76,7 +73,7 @@
 		</div>
 	</section>
 
-	<!-- <section class="ftco-section">
+	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center mb-3 pb-3">
 				<div class="col-md-12 heading-section text-center ftco-animate">
@@ -87,17 +84,18 @@
 		</div>
 		<div class="container">
 			<div class="row">
+				<% for(let i = 0 ; i < randomProduct.length; i++) { %>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="#" class="img-prod"><img class="img-fluid" src="./public/images/product-2.jpg"
+						<a href="#" class="img-prod"><img class="img-fluid" src="../public/upload/<%- randomProduct[i].image %>"
 								alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							<h3><a href="#">Strawberry</a></h3>
+							<h3><a href="/sanpham/<%= randomProduct[i]._id %>"><%- randomProduct[i].productName%></a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span>$120.00</span></p>
+									<p class="price"><span><%- randomProduct[i].price%> VND</span></p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">
@@ -117,11 +115,11 @@
 						</div>
 					</div>
 				</div>
-				
+			<% }%>
 				
 			</div>
 		</div>
-	</section> -->
+	</section>
 
 
 	<!-- Start Footer -->

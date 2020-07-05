@@ -59,6 +59,7 @@ module.exports = {
                     productName: req.body.productName,
                     price: req.body.price,
                     quality: req.body.quality,
+                    description : req.body.description,
                     image: req.file.filename
                 });
                 //lưu sản phẩm vào database
@@ -70,11 +71,12 @@ module.exports = {
                         })
                     }
                     else {
-                        res.json({
-                            //Them thành công thì chọn thêm tiếp hoặc về admin
-                            error: 'Thêm thành công :' + req.body.productName + ':!'
+                        // res.json({
+                        //     //Them thành công thì chọn thêm tiếp hoặc về admin
+                        //     error: 'Thêm thành công :' + req.body.productName + ':!'
                             
-                        })
+                        // })
+                        res.redirect('/admin')
                     }
                 })
             }
@@ -111,7 +113,8 @@ module.exports = {
                 }, {
                     productName: req.body.productName,
                     price: req.body.price,
-                    quality: req.body.quality
+                    quality: req.body.quality,
+                    description : req.body.description,
                 }, err => {
                     if (err) {
                         res.json({
@@ -144,6 +147,7 @@ module.exports = {
                         productName: req.body.productName,
                         price: req.body.price,
                         quality: req.body.quality,
+                        description : req.body.description,
                         image: req.file.filename
                     }, err => {
                         if (err) {
@@ -172,7 +176,7 @@ module.exports = {
                 })
             }
             else {
-                res.redirect('/account')
+                res.redirect('/admin')
             }
         })
     },

@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <%- include('layouts/header'); -%>
 
-<body class="goto-here">
-    <!-- Start nav -->
-    <%- include('./layouts/nav.ejs'); -%>
-    <!-- END nav -->
-    <section class="ftco-section main_add">
-        <div class="container">
-            <div class="themMoi">
-                <h2>Edit</h2>
                 <form action="/admin/edit" method="post" enctype="multipart/form-data">
                     <!-- hidden nó sẽ không hiện ra màn hình , 
                         1. Đầu tiên , không ai đi hiện id ra , nên sẽ hidden đi
@@ -20,28 +9,12 @@
                         value="<%- product.productName %>" /></br> </br>
                     <input type="text" name="price" placeholder="Giá" value="<%- product.price %>" /></br> </br>
                     <input type="text" name="quality" placeholder="Số lượng (kg)" value="<%- product.quality %>" /></br>
+                    <textarea name="description" placeholder="Mô tả" ><%- product.description %></textarea> 
+                    <br>
                     </br>
                     <img src="/public/upload/<%- product.image %>" width="100" alt="">
                     <input type="file" name="productImage"></br> </br>
                     <!-- Khi bấm nút sửa , cái route này sẽ post dữ liệu về đường dẫn mà mình khai báo ở action -->
                     <input type="submit" value="Sửa">
-
                 </form>
-            </div>
-        </div>
-    </section>
-    <!-- Start Footer -->
-    <%- include('./layouts/footer.ejs'); -%>
-    <!-- End -->
-
-    <!-- loader -->
-    <%- include('./layouts/loader.ejs'); -%>
-    <!-- end -->
-
-    <!-- Start Script -->
-    <%- include('./layouts/script.ejs'); -%>
-    <!-- End -->
-
-</body>
-
-</html>
+           

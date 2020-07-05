@@ -9,7 +9,7 @@
 	<section class="ftco-section main_admin">
 		<div class="container">
 			<h1>Danh Sách Sản Phẩm</h1>
-			<div class="themSP"><button  class="btn btn-primary"><a href="./admin/add">Thêm Sản Phẩm</a></button></div>
+			<div class="themSP"><button  class="btn btn-primary"><a href="/admin/add">Thêm SP</a></button></div>
 			<div class="tieude">
 				<div class="row">
 					<!-- Ten SP -->
@@ -33,7 +33,7 @@
 					<!-- Hinh SP -->
 					<div class="col-md-3 list">
 						<div class="ImageSP items">
-							<a href="#" class="img-prod">
+							<a href="#" class="img-prod" >
 								<h5>Hình Ảnh</h5>
 							</a>
 						</div>
@@ -72,7 +72,7 @@
 						<div class="ImageSP">
 							<a href="#" class="img-prod">
 								<img class="img-fluid" src="./public/upload/<%- product[i].image %>"
-									alt="Colorlib Template">
+									alt="Colorlib Template" style="background-size: cover;">
 							</a>
 						</div>
 					</div>
@@ -80,11 +80,10 @@
 					<div class="col-md-3 list">
 						<div class="acts">
 							<!-- xóa sản phẩm theo id -->
-							<button class="btn btn-primary act"><a href="/admin/delete/<%- product[i].id %>">Xóa Sản
+							<button onclick="return confirm('Bạn có muốn xóa sản phẩm <%= product[i].productName %> không ?')"  class="btn btn-primary act"><a href="/admin/delete/<%- product[i].id %>">Xóa Sản
 									Phẩm</a></button>
 							<!-- sửa sản phẩm theo id -->
-							<button class="btn btn-primary act"><a href="/admin/edit/<%- product[i].id %>">Sửa Sản
-									Phẩm</a></button>
+							<button class="btn btn-primary act"><a href="/admin/edit/<%- product[i].id %>">Sửa Sản Phẩm</a></button>
 						</div>
 					</div>
 					<% } %>

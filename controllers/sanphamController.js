@@ -1,4 +1,5 @@
 const productModel = require('../model/ProductModel');
+const ProductModel = require('../model/ProductModel');
 
 module.exports = {
     getSanPham: (req, res, next) => {
@@ -13,8 +14,12 @@ module.exports = {
                 .skip(soLuongBoQua)
                 .limit(PAGE_SIZE)
                 .then(product => {
-                    res.render('sanpham', {
-                        product
+                    productModel.countDocuments({})
+                    .then(total => {
+                        let totalPage = Math.ceil(total / PAGE_SIZE);
+                        res.render('sanpham', {
+                             product , totalPage 
+                        })
                     })
                 })
             //nếu không có mặc định cho nó là 1
@@ -25,8 +30,12 @@ module.exports = {
                 .skip(soLuongBoQua)
                 .limit(PAGE_SIZE)
                 .then(product => {
-                    res.render('sanpham', {
-                        product
+                    productModel.countDocuments({})
+                    .then(total => {
+                        let totalPage = Math.ceil(total / PAGE_SIZE);
+                        res.render('sanpham', {
+                             product , totalPage 
+                        })
                     })
                 })
         }
@@ -34,11 +43,14 @@ module.exports = {
     getDetailProduct: (req, res) => {
         productModel.findOne({
             _id: req.params.id
-        }, (err, product) => {
-            res.render('product-detail', {
-                product
+        })
+        .then(product => {
+            productModel.aggregate(
+                [{ $sample: { size: 4 } }]
+            )
+            .then(randomProduct => {
+                res.render('product-detail', { product, randomProduct })
             })
         })
     }
-    
 }

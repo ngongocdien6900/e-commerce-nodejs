@@ -14,6 +14,10 @@ const ProductSchema = new Schema({
         type : Number,
         require : true
     },
+    description : {
+        type : String,
+        require : true
+    },
     image : {
         type : String,
         default : 'Hình ảnh'
