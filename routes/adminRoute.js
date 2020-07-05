@@ -28,3 +28,5 @@ route.post('/editCategory', adminController.postEditCategory);
 route.get('/deleteCategory/:id', adminController.getDeleteCategory);
 
 module.exports = route
+
+

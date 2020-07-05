@@ -1,4 +1,6 @@
-
+const secret = 'NgocDien';
+const jwt = require('jsonwebtoken');
+const UserModel = require('../model/UserModel')
 module.exports = {
     validationRegister : (req, res, next) => {
         
@@ -20,38 +22,21 @@ module.exports = {
             next();
         } 
      }
-     , isLogin : (req, res, next) => {
-        if(req.headers && req.headers.authorization && String(req.headers.authorization.split(' ')[0]).toLowerCase === 'bearer') {
-            let token = req.headers.authorization.split(' ')[1];
-            jwt.verify(token, 'ngocdien', (err, decode) => {
-                //nếu có lỗi
-                if(err)
-                    return res.status(403).json({
-                        msg : 'Token invalid'
-                    });
-                //còn không thì đi tiếp
-                else 
+    //  , isLogin : (req, res, next) => {
+    //      if (req.session.token) {
+    //          jwt.verify(req.session.token, secret, (err, decode) => {
+    //              if (err) {
+    //                  res.redirect('/account/login')
+    //              } else {
+    //                 res.redirect('/');
+    //                 next();
+    //              }
+    //          })
+    //      } else {
+    //          res.redirect('/account/login')
+    //      }
+    //  }
 
-                    res.json(decode)
-            });
-        }
-        //không có truyền gì
-        else {
-            return res.status(403).json({
-                msg : 'Unauthorized'
-            });
-        }
-     }
-    //,
-    // validationLogin : (req, res, next) => {
-    //     if(req.body.username == null || req.body.password == null)
-    //     {
-    //         res.json({
-    //             error : true,
-    //             msg   : 'Không được để trống username hoặc password'
-    //         })
-    //     }else {
-    //         next()
-    //     }
-    // }
+
+
 }

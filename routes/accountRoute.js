@@ -12,4 +12,5 @@ route.get('/register', accountController.getRegister)
 route.post('/register', accountController.postRegister)
 
 
+
 module.exports = route;

@@ -164,10 +164,10 @@
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
 							
-							<h3><a href="#" style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
+							<h3><a href="/sanpham/<%- product[i]._id %>" style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span class="price-sale"><%= product[i].price %> VNĐ</span></p>
+									<p class="price"><span class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> VNĐ</span></p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">

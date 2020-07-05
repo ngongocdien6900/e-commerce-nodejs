@@ -58,13 +58,13 @@
 					<!-- Gia SP  -->
 					<div class="col-md-2 list">
 						<div class="Gia items">
-							<p class="price"><span class="price-sale"><%= product[i].price %></span> VNĐ</p>
+							<p class="price"><span class="price-sale"><%= String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %></span> VNĐ</p>
 						</div>
 					</div>
 					<!-- So Luong SP -->
 					<div class="col-md-2 list">
 						<div class="SoLuongSP items">
-							<p class="price"><span class="price-sale"><%= product[i].quality %> </span>kg</p>
+							<p class="price"><span class="price-sale"><%= String(product[i].quality).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> </span>kg</p>
 						</div>
 					</div>
 					<!-- Hinh SP -->

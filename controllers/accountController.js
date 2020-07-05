@@ -2,6 +2,7 @@ const UserModel = require('../model/UserModel');
 const bcrypt = require('bcryptjs');
 // const salt = bcrypt.genSaltSync(10); nếu có cái này thì nó ra false, nên để trực tiếp vào luôn
 const jwt = require('jsonwebtoken');
+const secret = 'NgocDien';
 module.exports = {
     getRegister: (req, res) => {
         res.render('register')
@@ -34,11 +35,11 @@ module.exports = {
                             address: req.body.address,
                             phone: req.body.phone
                         })
-                        .then(data => {
-                            res.redirect('/account/login')
-                        })
+                            .then(data => {
+                                res.redirect('/account/login')
+                            })
                     })
-                } 
+                }
             })
             .catch(err => {
                 res.json({
@@ -49,32 +50,42 @@ module.exports = {
                 // return res.send(error.message);
             })
     },
-    getLogin : (req, res) => {
+    getLogin: (req, res) => {
         res.render('login');
     },
-    postLogin : (req, res) => {
+    postLogin: (req, res) => {
         //findOne giống như ID , còn find là giống class . class nó trả ra 1 mảng . Thì data[0].password
         UserModel.findOne({
-            username : req.body.username
-        })
-        .then(data => {
-            console.log(data)
-            bcrypt.compare(req.body.password, data.password, (err, result) => {
-                if(result){
-                    console.log(result)
-                    res.json({
-                        error : false,
-                        msg   : 'Login OK'
-                    })
-                }
-                else {
-                    res.json("Lỗi cmnr")
-                }
-            })
-        }).catch(err => {
-            console.log(err);
+            username: req.body.username
+        }, (err, item) => {
+            if (!err && item != null) {
+                bcrypt.compare(req.body.password, item.password, (err2, result) => {
+                    if (result == false) {
+                        res.json({
+                            error: true,
+                            msg: 'Sai password'
+                        })
+                    }
+                    else {                      // 1 tuan
+                        jwt.sign(item.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
+                            if (err) {
+                                res.json({
+                                    error: true,
+                                    msg: 'Token generate error ' + err
+                                })
+                            } else {
+                                req.session.token = token;
+                            }
+                        })
+                    }
+                })
+            } else {
+                res.json({
+                    error: true,
+                    msg: 'Sai username'
+                })
+            }
         })
     },
 }
-
 

@@ -3,10 +3,20 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const ejs = require('ejs');
 const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
+
+
 const app = express();
 const port = 3000;
 //dùng để upload file image
 const multer = require('multer')
+
+// session (for Web Browser login)
+const session = require('express-session')
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({ secret: 'ThanhUyen', cookie: { maxAge: 60000000 }}))
+//-- 
 
 //router
 const homeRouter = require('./routes/homeRoute');
@@ -14,9 +24,12 @@ const accountRouter = require('./routes/accountRoute');
 const shopRouter = require('./routes/shopRoute');
 const contactRouter = require('./routes/contactRoute');
 const cartRouter = require('./routes/cartRoute');
+
+
+
 const adminRouter = require('./routes/adminRoute');
 
-// const accountMiddleware = require('./middleware/accountMiddleware');
+const accountMiddleware = require('./middleware/accountMiddleware');
 
 //public thư mục này lên
 app.use('/public', express.static('public'));
@@ -36,14 +49,14 @@ app.use('/account', accountRouter);
 app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
+//kiểm tra nếu đăng nhập mới cho vào
+// app.use(accountMiddleware.isLogin);
 app.use('/admin', adminRouter)
 app.use('/cart', cartRouter);
 
 
 
-app.get('/cc', (req, res) => {
-    res.render('admin')
-})
+
 
 app.listen(port, () => {
     console.log(`Sever listening on port ${port}`);

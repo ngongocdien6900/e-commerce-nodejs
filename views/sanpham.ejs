@@ -46,7 +46,7 @@
 							<h3><a href="/sanpham/<%= product[i]._id %>" style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span class="price-sale"><%= product[i].price %> VNĐ</span></p>
+									<p class="price"><span class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> VNĐ</span></p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">
@@ -72,11 +72,11 @@
           <div class="col text-center">
             <div class="block-27">
               <ul>
-				<li><a href="#">&lt;</a></li>
+				<!-- <li><a href="">&lt;</a></li> -->
 				  <% for(let i = 1 ; i <= totalPage; i++) { %>
                 	<li ><span><a href="/sanpham?page=<%- i %>"><%- i %></a></span></li>
 				  <% }%>
-				  <li><a href="#">&gt;</a></li>
+				  <!-- <li><a href="#">&gt;</a></li> -->
               </ul>
             </div>
           </div>
