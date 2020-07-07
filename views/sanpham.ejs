@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Start header -->
-  <%- include('./layouts/header.ejs'); -%>
-  <!-- End -->
-  <body class="goto-here">
+<!-- Start header -->
+<%- include('./layouts/header.ejs'); -%>
+<!-- End -->
+
+<body class="goto-here">
 	<!-- Start nav -->
 	<%- include('./layouts/nav.ejs'); -%>
-    <!-- END nav -->
+	<!-- END nav -->
 
-    <div class="hero-wrap hero-bread" style="background-image: url('./public/images/bg_1.jpg');">
-      <div class="container">
-        <div class="row no-gutters slider-text align-items-center justify-content-center">
-          <div class="col-md-9 ftco-animate text-center">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
-            <h1 class="mb-0 bread">Products</h1>
-          </div>
-        </div>
-      </div>
-    </div>
+	<div class="hero-wrap hero-bread" style="background-image: url('./public/images/bg_1.jpg');">
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-center justify-content-center">
+				<div class="col-md-9 ftco-animate text-center">
+					<p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span>
+					</p>
+					<h1 class="mb-0 bread">Products</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <section class="ftco-section">
-    	<div class="container">
-    		<div class="row justify-content-center">
-    			<div class="col-md-10 mb-5 text-center">
-    				<ul class="product-category">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-10 mb-5 text-center">
+					<ul class="product-category">
 						<!-- danh mục sản phẩm -->
-    					<li><a href="#" class="active">All</a></li>
-    					<li><a href="#">Vegetables</a></li>
-    					<li><a href="#">Fruits</a></li>
-    					<li><a href="#">Juice</a></li>
-    					<li><a href="#">Dried</a></li>
-    				</ul>
-    			</div>
-    		</div>
-    		<div class="row">
+						<li><a href="#" class="active">All</a></li>
+						<li><a href="#">Vegetables</a></li>
+						<li><a href="#">Fruits</a></li>
+						<li><a href="#">Juice</a></li>
+						<li><a href="#">Dried</a></li>
+					</ul>
+					<form action="/sanpham" method="GET">
+						<input type="text" name="search" placeholder="Tìm kiếm">
+						<input type="submit" value="Search">
+					</form>
+				</div>
+			</div>
+			<div class="row">
 				<% for(let i = 0; i < product.length; i++) { %>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="/sanpham/<%= product[i]._id %>" class="img-prod"><img class="img-fluid" src="./public/upload/<%- product[i].image %>"
-								alt="Colorlib Template">
+						<a href="/sanpham/<%= product[i]._id %>" class="img-prod"><img class="img-fluid"
+								src="./public/upload/<%- product[i].image %>" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							
-							<h3><a href="/sanpham/<%= product[i]._id %>" style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
+
+							<h3><a href="/sanpham/<%= product[i]._id %>"
+									style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> VNĐ</span></p>
+									<p class="price"><span
+											class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
+											VNĐ</span></p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">
@@ -68,37 +77,38 @@
 				</div>
 				<% } %>
 			</div>
-    		<div class="row mt-5">
-          <div class="col text-center">
-            <div class="block-27">
-              <ul>
-				<!-- <li><a href="">&lt;</a></li> -->
-				  <% for(let i = 1 ; i <= totalPage; i++) { %>
-                	<li ><span><a href="/sanpham?page=<%- i %>"><%- i %></a></span></li>
-				  <% }%>
-				  <!-- <li><a href="#">&gt;</a></li> -->
-              </ul>
-            </div>
-          </div>
-        </div>
-    	</div>
-    </section>
+			<div class="row mt-5">
+				<div class="col text-center">
+					<div class="block-27">
+						<ul>
+							<!-- <li><a href="">&lt;</a></li> -->
+							<% for(let i = 1 ; i <= totalPage; i++) { %>
+							<li><span><a href="/sanpham?page=<%- i %>"><%- i %></a></span></li>
+							<% }%>
+							<!-- <li><a href="#">&gt;</a></li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-		
-	
-    <!-- Start footer -->
+
+
+	<!-- Start footer -->
 	<%- include('./layouts/footer.ejs'); -%>
 	<!-- End -->
-  
-
-  <!-- loader -->
-  <%- include('./layouts/loader.ejs'); -%>
-  <!-- end -->
 
 
-  <!-- Start script -->
-  <%- include('./layouts/script.ejs'); -%>
-  <!-- End script -->
-    
-  </body>
+	<!-- loader -->
+	<%- include('./layouts/loader.ejs'); -%>
+	<!-- end -->
+
+
+	<!-- Start script -->
+	<%- include('./layouts/script.ejs'); -%>
+	<!-- End script -->
+
+</body>
+
 </html>

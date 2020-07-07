@@ -30,13 +30,32 @@ let upload = multer({
 
 module.exports = {
     getProduct: (req, res) => {
-        ProductModel.find({})
-            .then(product => {
-                res.render('admin', {
-                    // truyền qua bên kia
-                    product
-                })
+        if (req.query.search) {  
+            ProductModel.find({
+                productName : new RegExp(req.query.search)
+            }, (err, product) => {
+                if(err) {
+                    res.json({
+                        error: 0,
+                        msg: err
+                    })
+                }else {
+                    res.render('admin', {
+                        // truyền qua bên kia
+                        product
+                    })
+                }
             })
+        } else {
+            ProductModel.find({})
+                .then(product => {
+                    res.render('admin', {
+                        // truyền qua bên kia
+                        product
+                    })
+                })
+        }
+
     },
     getAddProduct: (req, res) => {
         res.render('addProduct');
@@ -59,7 +78,7 @@ module.exports = {
                     productName: req.body.productName,
                     price: req.body.price,
                     quality: req.body.quality,
-                    description : req.body.description,
+                    description: req.body.description,
                     image: req.file.filename
                 });
                 //lưu sản phẩm vào database
@@ -74,7 +93,7 @@ module.exports = {
                         // res.json({
                         //     //Them thành công thì chọn thêm tiếp hoặc về admin
                         //     error: 'Thêm thành công :' + req.body.productName + ':!'
-                            
+
                         // })
                         res.redirect('/admin')
                     }
@@ -114,7 +133,7 @@ module.exports = {
                     productName: req.body.productName,
                     price: req.body.price,
                     quality: req.body.quality,
-                    description : req.body.description,
+                    description: req.body.description,
                 }, err => {
                     if (err) {
                         res.json({
@@ -147,7 +166,7 @@ module.exports = {
                         productName: req.body.productName,
                         price: req.body.price,
                         quality: req.body.quality,
-                        description : req.body.description,
+                        description: req.body.description,
                         image: req.file.filename
                     }, err => {
                         if (err) {
