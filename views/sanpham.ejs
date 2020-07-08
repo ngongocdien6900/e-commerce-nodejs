@@ -28,10 +28,10 @@
 					<ul class="product-category">
 						<!-- danh mục sản phẩm -->
 						<li><a href="#" class="active">All</a></li>
-						<li><a href="#">Vegetables</a></li>
-						<li><a href="#">Fruits</a></li>
-						<li><a href="#">Juice</a></li>
-						<li><a href="#">Dried</a></li>
+						<% for(let i = 0; i < category.length; i++) { %>
+						<li><a href=""><%-category[i].categoryName %></a></li>
+						<% }%>
+						
 					</ul>
 					<form action="/sanpham" method="GET">
 						<input type="text" name="search" placeholder="Tìm kiếm">

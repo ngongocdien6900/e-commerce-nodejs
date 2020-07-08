@@ -29,7 +29,7 @@ const cartRouter = require('./routes/cartRoute');
 
 const adminRouter = require('./routes/adminRoute');
 
-const accountMiddleware = require('./middleware/accountMiddleware');
+// const accountMiddleware = require('./middleware/accountMiddleware');
 
 //public thư mục này lên
 app.use('/public', express.static('public'));
@@ -49,6 +49,11 @@ app.use('/account', accountRouter);
 app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
+
+
+app.get('/checkout' , (req, res) => {
+    res.render('checkout')
+})
 //kiểm tra nếu đăng nhập mới cho vào
 // app.use(accountMiddleware.isLogin);
 app.use('/admin', adminRouter)

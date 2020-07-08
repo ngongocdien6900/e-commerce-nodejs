@@ -13,6 +13,12 @@
             <form action="/admin/add" method="post" enctype="multipart/form-data">  
                 <input type="text" name="productName" placeholder="Tên Sản Phẩm" />
                 <br>
+                <select name="slcCategory" >
+                    <% for(let i = 0; i < data.length; i++) {%>
+                    <option value="<%- data[i]._id %>"><%-data[i].categoryName %></option>
+                    <% }%>
+                </select>
+                <br>
                 <input type="text" name="price" placeholder="Giá (VNĐ)"/>
                 <br>
                 <input type="text" name="quality" placeholder="Số Lượng (kg)"/>

@@ -57,9 +57,9 @@ module.exports = {
         //findOne giống như ID , còn find là giống class . class nó trả ra 1 mảng . Thì data[0].password
         UserModel.findOne({
             username: req.body.username
-        }, (err, item) => {
-            if (!err && item != null) {
-                bcrypt.compare(req.body.password, item.password, (err2, result) => {
+        }, (err, user) => {
+            if (!err && user != null) {
+                bcrypt.compare(req.body.password, user.password, (err2, result) => {
                     if (result == false) {
                         res.json({
                             error: true,
@@ -67,7 +67,7 @@ module.exports = {
                         })
                     }
                     else {                      // 1 tuan
-                        jwt.sign(item.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
+                        jwt.sign(user.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
                             if (err) {
                                 res.json({
                                     error: true,

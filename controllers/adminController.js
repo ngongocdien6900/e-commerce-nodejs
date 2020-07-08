@@ -58,7 +58,16 @@ module.exports = {
 
     },
     getAddProduct: (req, res) => {
-        res.render('addProduct');
+        Category.find((err, data) => {
+            if(err) {
+                res.json({
+                    error: 0,
+                    msg: err
+                })
+            }else {
+                res.render('addProduct', {data});
+            }
+        })
     },
     postAddProduct: (req, res) => {
         upload(req, res, err => {
@@ -95,7 +104,21 @@ module.exports = {
                         //     error: 'Thêm thành công :' + req.body.productName + ':!'
 
                         // })
-                        res.redirect('/admin')
+                        Category.findOneAndUpdate({
+                            _id : req.body.slcCategory 
+                        }, {
+                            // toan tu bat dau bang dau $
+                            $push: {products: product._id}
+                        } , err => {
+                            if (err) {
+                                res.json({
+                                    error: 0,
+                                    msg: err
+                                })
+                            }else {
+                                res.redirect('/admin')
+                            }
+                        })
                     }
                 })
             }
