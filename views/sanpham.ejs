@@ -28,10 +28,9 @@
 					<ul class="product-category">
 						<!-- danh mục sản phẩm -->
 						<li><a href="#" class="active">All</a></li>
-						<% for(let i = 0; i < category.length; i++) { %>
-						<li><a href=""><%-category[i].categoryName %></a></li>
-						<% }%>
-						
+						<% category.forEach(cha => { %>
+							<li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-cha.categoryName %></a></li>
+						<% }) %>
 					</ul>
 					<form action="/sanpham" method="GET">
 						<input type="text" name="search" placeholder="Tìm kiếm">
@@ -55,7 +54,7 @@
 								<div class="pricing">
 									<p class="price"><span
 											class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
-											VNĐ</span></p>
+											đ</span></p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">

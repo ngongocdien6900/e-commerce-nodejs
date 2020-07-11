@@ -1,7 +1,7 @@
 const express = require('express');
 const route = express.Router();
 const adminController = require('../controllers/adminController');
-
+const userModel = require('../model/UserModel');
 
 //Product
 //hiển thị danh sách sản phẩm

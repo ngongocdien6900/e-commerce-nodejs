@@ -29,6 +29,7 @@ let upload = multer({
 }).single("productImage");
 
 module.exports = {
+
     getProduct: (req, res) => {
         if (req.query.search) {  
             ProductModel.find({
@@ -99,16 +100,12 @@ module.exports = {
                         })
                     }
                     else {
-                        // res.json({
-                        //     //Them thành công thì chọn thêm tiếp hoặc về admin
-                        //     error: 'Thêm thành công :' + req.body.productName + ':!'
-
-                        // })
-                        Category.findOneAndUpdate({
-                            _id : req.body.slcCategory 
+                        // res.redirect('/admin')
+                        ProductModel.findOneAndUpdate({
+                            _id : product._id
                         }, {
                             // toan tu bat dau bang dau $
-                            $push: {products: product._id}
+                            $push: {categories: req.body.slcCategory }
                         } , err => {
                             if (err) {
                                 res.json({
@@ -237,8 +234,7 @@ module.exports = {
     },
     postAddCategory: (req, res) => {
         let category = new Category({
-            categoryName: req.body.category,
-            products: []
+            categoryName: req.body.category
         });
         category.save(err => {
             if (err) {

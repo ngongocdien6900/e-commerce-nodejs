@@ -66,17 +66,9 @@ module.exports = {
                             msg: 'Sai password'
                         })
                     }
-                    else {                      // 1 tuan
-                        jwt.sign(user.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
-                            if (err) {
-                                res.json({
-                                    error: true,
-                                    msg: 'Token generate error ' + err
-                                })
-                            } else {
-                                req.session.token = token;
-                            }
-                        })
+                    else {                          
+                        req.session.userId = user._id
+                        res.redirect('/admin')
                     }
                 })
             } else {
@@ -87,5 +79,22 @@ module.exports = {
             }
         })
     },
+    getLogout: (req, res) => {
+        req.session.destroy(() => {
+            res.redirect('/account/login')
+        })
+    }
 }
 
+// let b = a => {
+//     jwt.sign(user.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
+//         if (err) {
+//             res.json({
+//                 error: true,
+//                 msg: 'Token generate error ' + err
+//             })
+//         } else {
+//             req.session.token = token;
+//         }
+//     })
+// }

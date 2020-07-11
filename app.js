@@ -1,9 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const checkRole = require('./middleware/checkRole')
 const ejs = require('ejs');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
 
 
 
@@ -25,8 +24,6 @@ const shopRouter = require('./routes/shopRoute');
 const contactRouter = require('./routes/contactRoute');
 const cartRouter = require('./routes/cartRoute');
 
-
-
 const adminRouter = require('./routes/adminRoute');
 
 // const accountMiddleware = require('./middleware/accountMiddleware');
@@ -38,29 +35,26 @@ app.use('/public', express.static('public'));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//cookie
-app.use(cookieParser())
+
 
 //set cho máy biết mình dùng view engine là ejs
 app.set('view engine', 'ejs')
 app.set('views', './views')
 
+
+global.loggedIn = null;
+app.use("*", (req, res, next) => {
+    loggedIn = req.session.userId;
+    next()
+});
+
 app.use('/account', accountRouter);
 app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
-
-
-app.get('/checkout' , (req, res) => {
-    res.render('checkout')
-})
-//kiểm tra nếu đăng nhập mới cho vào
-// app.use(accountMiddleware.isLogin);
-app.use('/admin', adminRouter)
+                // check xem nếu role bằng 1 thì cho vô . K thì ra trang /
+app.use('/admin',checkRole.checkRole , adminRouter)
 app.use('/cart', cartRouter);
-
-
-
 
 
 app.listen(port, () => {

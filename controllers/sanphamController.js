@@ -7,43 +7,28 @@ module.exports = {
 
         //nếu có tìm kiếm
         if (req.query.search) {
-            productModel.find({
+            let product = await productModel.find({
                 productName: new RegExp(req.query.search)
-            }, (err, product) => {
-                if (err) {
-                    res.json({
-                        error: 0,
-                        msg: err
-                    })
-                } else {
-                    let totalPage = Math.ceil(product / PAGE_SIZE);
-                    res.render('sanpham', {
-                        product
-                    })
-
-                }
+            })
+            let totalPage = await Math.ceil(product / PAGE_SIZE);
+            let category = await categoryModel.find();
+            res.render('sanpham', {
+                product, totalPage, category
             })
         } else {
             try {
                 // lấy page truyền trên thanh địa chỉ
                 let page = req.query.page;
                 //nếu có page truyền lên thì lấy giá trị đó. K có thì mặc định là 1
-                page ? req.query.page : page = 1
+                page ? page : page = 1
                 let skip = (page - 1) * PAGE_SIZE;
                 let product = await productModel.find({}) 
                 .skip(skip)
                 .limit(PAGE_SIZE)
+                //lấy tổng số sản phẩm rồi chia ra để tính xem có bao nhiêu trang
                 let totalPage = await productModel.countDocuments({})
                 totalPage = Math.ceil(totalPage / PAGE_SIZE)
-                let category = await categoryModel.aggregate([{
-                    $lookup: {
-                        //nhu ten db ben kia
-                        from: "product",
-                        localField: "products",
-                        foreignField: "_id",
-                        as: "listCategory"
-                    }
-                }])
+                let category = await categoryModel.find();
                 res.render('sanpham', {
                     product, category, totalPage
                 })
@@ -54,90 +39,39 @@ module.exports = {
         }
         
     },
-    getDetailProduct: (req, res) => {
-        productModel.findOne({
+    getDetailProduct: async (req, res) => {
+        let product = await productModel.findOne({
             _id: req.params.id
         })
-        .then(product => {
-                productModel.aggregate(
-                    [{ $sample: { size: 4 } }]
-                )
-                    .then(randomProduct => {
-                        res.render('product-detail', { product, randomProduct })
-                    })
-            })
+        let randomProduct = await  productModel.aggregate(
+            [{ $sample: { size: 4 } }]
+        )      
+        res.render('product-detail', { product, randomProduct })
+    },
+    getProductByCategory : async (req, res) => {
+        productModel.find()
+        .populate('categories')
+        .exec((err, product) => {
+            if(err) throw err
+            if(product)
+                categoryModel.findOne({
+                _id : req.params.idCategory
+                }).then(category => {
+                    res.render('productByCategory', {product, category})
+                })
+        })
     }
     
 }
 
-let a = () => {
-    //lấy page trên thanh địa chỉ
-    let page = req.query.page;
-    //nếu có page trên thanh địa chỉ
-    if (page) {
-        let soLuongBoQua = (page - 1) * PAGE_SIZE;
-        productModel.find({})
-            .skip(soLuongBoQua)
-            .limit(PAGE_SIZE)
-            .then(product => {
-                productModel.countDocuments({})
-                    .then(total => {
-                        let totalPage = Math.ceil(total / PAGE_SIZE);
-                        categoryModel.aggregate([{
-                            $lookup: {
-                                //nhu ten db ben kia
-                                from: "product",
-                                localField: "products",
-                                foreignField: "_id",
-                                as: "listCategory"
-                            }
-                        }], (err, category) => {
-                            if (err) {
-                                res.json({
-                                    error: 0,
-                                    msg: err
-                                })
-                            } else {
-                                res.render('sanpham', {
-                                    product, totalPage, category
-                                })
-                            }
-                        });
-                    })
-            })
-        //nếu không có mặc định cho nó là 1
-    } else {
-        let page = 1;
-        let soLuongBoQua = (page - 1) * PAGE_SIZE;
-        productModel.find({})
-            .skip(soLuongBoQua)
-            .limit(PAGE_SIZE)
-            .then(product => {
-                productModel.countDocuments({})
-                    .then(total => {
-                        let totalPage = Math.ceil(total / PAGE_SIZE);
-                        categoryModel.aggregate([{
-                            $lookup: {
-                                //nhu ten db ben kia
-                                from: "product",
-                                localField: "products",
-                                foreignField: "_id",
-                                as: "listCategory"
-                            }
-                        }], (err, category) => {
-                            if (err) {
-                                res.json({
-                                    error: 0,
-                                    msg: err
-                                })
-                            } else {
-                                res.render('sanpham', {
-                                    product, totalPage, category
-                                })
-                            }
-                        });
-                    })
-            })
-    }
-}
+// <% for(let i = 0; i < category.length; i++) { %>
+//     <li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-category[i].categoryName %></a></li>
+//     <% }) %>
 
+// <% for(let i = 0; i < product.length; i++) {%>
+//     <% if(category._id.toString() == product[i].categories._id.toString()){ %>  <br> 
+//             đúng
+//     <%}else {%>
+//             sai
+//         <% } %>
+// <% } %>
