@@ -15,8 +15,10 @@
 				<div class="col-md-10 mb-5 text-center">
 					<ul class="product-category">
 						<!-- danh mục sản phẩm -->
-						<li><a href="#" class="active">All</a></li>
-						
+						<li><a href="/sanpham" class="active">All</a></li>
+						<% category.forEach(cha => { %>
+							<li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-cha.categoryName %></a></li>
+						<% }) %>
 					</ul>
 					<form action="/sanpham" method="GET">
 						<input type="text" name="search" placeholder="Tìm kiếm">
@@ -26,7 +28,6 @@
 			</div>
 			<div class="row">
                 <% for(let i = 0; i < product.length; i++) { %>
-                    <% if(category._id.toString() === product[i].categories._id.toString()){ %>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="product">
                                 <a href="/sanpham/<%= product[i]._id %>" class="img-prod"><img class="img-fluid"
@@ -61,7 +62,6 @@
                                 </div>
                             </div>
                         </div>
-                    <% }%>
 				<% } %>
 			</div>
 			

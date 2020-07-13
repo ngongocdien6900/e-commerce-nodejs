@@ -1,54 +1,97 @@
 const UserModel = require('../model/UserModel');
 const bcrypt = require('bcryptjs');
 // const salt = bcrypt.genSaltSync(10); nếu có cái này thì nó ra false, nên để trực tiếp vào luôn
-const jwt = require('jsonwebtoken');
-const secret = 'NgocDien';
+// const jwt = require('jsonwebtoken');
+// const secret = 'NgocDien';
+
+//upload avatar
+const multer = require('multer');
+const { response } = require('express');
+
+let storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // đường dẫn nó up lên
+        cb(null, 'public/upload')
+    },
+    filename: function (req, file, cb) {
+        // tránh up trùng file
+        cb(null, Date.now() + "-" + file.originalname)
+    }
+});
+let upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        console.log(file);
+        //những loại file được phép upload
+        if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+            cb(null, true)
+        } else {
+            return cb(new Error('Only image are allowed!'))
+        }
+    }
+    //name bên upload
+}).single("avatar");
+
 module.exports = {
     getRegister: (req, res) => {
         res.render('register')
     },
     postRegister: (req, res) => {
-        //tìm username với email trên database
-        UserModel.findOne({
-            $or: [
-                { username: req.body.username },
-                { email: req.body.email }
-            ]
-        })
-            .then(data => {
-                //nếu tồn tại email
-                if (data) {
-                    res.json({
-                        error: true,
-                        msg: 'Email hoặc username đã có người đăng kí',
-                    })
-                }
-                //nếu tồn tại password
-                //không tồn tại
-                else {
-                    bcrypt.hash(req.body.password, 10, function (err, hash) {
-                        return UserModel.create({
-                            name: req.body.name,
-                            email: req.body.email,
-                            username: req.body.username,
-                            password: hash, // password bây giờ sẽ bằng đoạn mã hóa 
-                            address: req.body.address,
-                            phone: req.body.phone
+        upload(req, res, err => {
+            if (err instanceof multer.MulterError) {
+                res.json({
+                    error: 0,
+                    msg: "A Multer error occurred when uploading"
+                })
+            } else if (err) {
+                res.json({
+                    error: 0,
+                    msg: "An unknown error occurred when uploading." + err
+                })
+            } else {
+                //tìm username với email trên database
+                UserModel.findOne({
+                    $or: [
+                        { username: req.body.username },
+                        { email: req.body.email }
+                    ]
+                })
+                .then(data => {
+                    //nếu tồn tại email
+                    if (data) {
+                        res.json({
+                            error: true,
+                            msg: 'Email hoặc username đã có người đăng kí',
                         })
+                    }
+                    //nếu tồn tại password
+                    //không tồn tại
+                    else {
+                        bcrypt.hash(req.body.password, 10, function (err, hash) {
+                            return UserModel.create({
+                                name: req.body.name,
+                                email: req.body.email,
+                                username: req.body.username,
+                                password: hash, // password bây giờ sẽ bằng đoạn mã hóa 
+                                address: req.body.address,
+                                phone: req.body.phone,
+                                image: req.file.filename
+                            })
                             .then(data => {
                                 res.redirect('/account/login')
                             })
-                    })
-                }
-            })
-            .catch(err => {
-                res.json({
-                    error: true,
-                    msg: 'Tạo tài khoản thất bại'
+                        })
+                    }
                 })
-                // res.status(error.response.status)
-                // return res.send(error.message);
-            })
+                .catch(err => {
+                    res.json({
+                        error: true,
+                        msg: 'Tạo tài khoản thất bại' + err
+                    })
+                })
+            }
+        })
+        
     },
     getLogin: (req, res) => {
         res.render('login');

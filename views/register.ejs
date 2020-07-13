@@ -48,7 +48,7 @@
         <div class="col-lg-12 col-md-12">
           <div class="login_part_form">
             <div class="login_part_form_iner">
-              <form class="form" action="/account/register" method="post" novalidate="novalidate">
+              <form class="form" action="/account/register" method="post" novalidate="novalidate" enctype="multipart/form-data">
                 <div class="col-md-12 form-group inputBox">
                   <input type="text" class="form-control" id="name" name="name" value="" placeholder="Họ Tên">
                 </div>
@@ -74,7 +74,10 @@
                 <div class="col-md-12 form-group inputBox">
                   <input type="text" class="form-control" id="phone" name="phone" value="" placeholder="Số điện thoại ">
                 </div>
+                <input type="file" name="avatar">
+                </br>
                 <div class="col-md-12 form-group">
+                  
                   <button type="submit" value="submit" class="btnRegister">Đăng Kí
                   </button>
                   <p class="forgetPassword">Bạn đã có tài khoản ? Trở lại trang <a class="lost_pass" href="login">Đăng

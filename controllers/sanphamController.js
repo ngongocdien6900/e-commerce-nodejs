@@ -49,14 +49,15 @@ module.exports = {
         res.render('product-detail', { product, randomProduct })
     },
     getProductByCategory : async (req, res) => {
-        productModel.find()
+        productModel.find({
+            categories : req.params.idCategory
+        })
         .populate('categories')
         .exec((err, product) => {
             if(err) throw err
             if(product)
-                categoryModel.findOne({
-                _id : req.params.idCategory
-                }).then(category => {
+                categoryModel.find()
+                .then(category => {
                     res.render('productByCategory', {product, category})
                 })
         })
@@ -64,14 +65,3 @@ module.exports = {
     
 }
 
-// <% for(let i = 0; i < category.length; i++) { %>
-//     <li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-category[i].categoryName %></a></li>
-//     <% }) %>
-
-// <% for(let i = 0; i < product.length; i++) {%>
-//     <% if(category._id.toString() == product[i].categories._id.toString()){ %>  <br> 
-//             đúng
-//     <%}else {%>
-//             sai
-//         <% } %>
-// <% } %>

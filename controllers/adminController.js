@@ -105,7 +105,7 @@ module.exports = {
                             _id : product._id
                         }, {
                             // toan tu bat dau bang dau $
-                            $push: {categories: req.body.slcCategory }
+                            categories: req.body.slcCategory 
                         } , err => {
                             if (err) {
                                 res.json({

@@ -26,26 +26,13 @@ const ProductSchema = new Schema({
     categories : {
             type : mongoose.Schema.Types.ObjectId,
             ref : 'category'
-        }
+    }
     
 }, {
     collection : 'product'
 })
 
 const ProductModel = mongoose.model('product', ProductSchema);
-
-
-// ProductModel.find({
-//     productName : 'Củ lang'
-// })
-// // tên trường chứ k phải tên bảng
-// .populate('categories', 'categoryName')
-// .exec((err, data) => {
-//     if(err) throw err
-//     if(data)
-//         console.log(data)
-// })
-
 
 module.exports = ProductModel;
 

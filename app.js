@@ -4,8 +4,6 @@ const path = require('path');
 const checkRole = require('./middleware/checkRole')
 const ejs = require('ejs');
 
-
-
 const app = express();
 const port = 3000;
 //dùng để upload file image
@@ -14,7 +12,7 @@ const multer = require('multer')
 // session (for Web Browser login)
 const session = require('express-session')
 app.set('trust proxy', 1) // trust first proxy
-app.use(session({ secret: 'ThanhUyen', cookie: { maxAge: 60000000 }}))
+app.use(session({ secret: 'ThanhUyen', cookie: { maxAge: 60000000 } }))
 //-- 
 
 //router
@@ -52,8 +50,8 @@ app.use('/account', accountRouter);
 app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
 app.use('/', homeRouter);
-                // check xem nếu role bằng 1 thì cho vô . K thì ra trang /
-app.use('/admin',checkRole.checkRole , adminRouter)
+// check xem nếu role bằng 1 thì cho vô . K thì ra trang /
+app.use('/admin', checkRole.checkRole, adminRouter)
 app.use('/cart', cartRouter);
 
 
