@@ -5,42 +5,42 @@ const multer = require('multer');
 const { response } = require('express');
 
 let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         // đường dẫn nó up lên
         cb(null, 'public/upload')
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         // tránh up trùng file
         cb(null, Date.now() + "-" + file.originalname)
     }
 });
 let upload = multer({
     storage: storage,
-    fileFilter: function (req, file, cb) {
-        console.log(file);
-        //những loại file được phép upload
-        if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-            cb(null, true)
-        } else {
-            return cb(new Error('Only image are allowed!'))
+    fileFilter: function(req, file, cb) {
+            console.log(file);
+            //những loại file được phép upload
+            if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+                cb(null, true)
+            } else {
+                return cb(new Error('Only image are allowed!'))
+            }
         }
-    }
-    //name bên upload
+        //name bên upload
 }).single("productImage");
 
 module.exports = {
 
     getProduct: (req, res) => {
-        if (req.query.search) {  
+        if (req.query.search) {
             ProductModel.find({
-                productName : new RegExp(req.query.search)
+                productName: new RegExp(req.query.search)
             }, (err, product) => {
-                if(err) {
+                if (err) {
                     res.json({
                         error: 0,
                         msg: err
                     })
-                }else {
+                } else {
                     res.render('admin', {
                         // truyền qua bên kia
                         product
@@ -60,13 +60,13 @@ module.exports = {
     },
     getAddProduct: (req, res) => {
         Category.find((err, data) => {
-            if(err) {
+            if (err) {
                 res.json({
                     error: 0,
                     msg: err
                 })
-            }else {
-                res.render('addProduct', {data});
+            } else {
+                res.render('addProduct', { data });
             }
         })
     },
@@ -98,21 +98,20 @@ module.exports = {
                             error: 0,
                             msg: err
                         })
-                    }
-                    else {
+                    } else {
                         // res.redirect('/admin')
                         ProductModel.findOneAndUpdate({
-                            _id : product._id
+                            _id: product._id
                         }, {
                             // toan tu bat dau bang dau $
-                            categories: req.body.slcCategory 
-                        } , err => {
+                            categories: req.body.slcCategory
+                        }, err => {
                             if (err) {
                                 res.json({
                                     error: 0,
                                     msg: err
                                 })
-                            }else {
+                            } else {
                                 res.redirect('/admin')
                             }
                         })
@@ -124,8 +123,7 @@ module.exports = {
     getEditProduct: (req, res) => {
         ProductModel.findById(
             // đã là tìm theo id thì truyền theo id thôi
-            req.params.id
-            , (err, product) => {
+            req.params.id, (err, product) => {
                 if (err) {
                     res.json({
                         err: 0,
@@ -148,25 +146,24 @@ module.exports = {
             //1. Không có file mới , update mấy cái kia , k update image
             if (!req.file) {
                 ProductModel.updateOne({
-                    _id: req.body.idProduct
-                }, {
-                    productName: req.body.productName,
-                    price: req.body.price,
-                    quality: req.body.quality,
-                    description: req.body.description,
-                }, err => {
-                    if (err) {
-                        res.json({
-                            error: 0,
-                            msg: err
-                        })
-                    }
-                    else {
-                        // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
-                        res.redirect('/admin')
-                    }
-                })
-                // có update image mới
+                        _id: req.body.idProduct
+                    }, {
+                        productName: req.body.productName,
+                        price: req.body.price,
+                        quality: req.body.quality,
+                        description: req.body.description,
+                    }, err => {
+                        if (err) {
+                            res.json({
+                                error: 0,
+                                msg: err
+                            })
+                        } else {
+                            // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
+                            res.redirect('/admin')
+                        }
+                    })
+                    // có update image mới
             } else {
                 if (err instanceof multer.MulterError) {
                     res.json({
@@ -194,8 +191,7 @@ module.exports = {
                                 error: 0,
                                 msg: err
                             })
-                        }
-                        else {
+                        } else {
                             // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
                             res.redirect('/admin')
                         }
@@ -213,8 +209,7 @@ module.exports = {
                     err: 0,
                     msg: err
                 })
-            }
-            else {
+            } else {
                 res.redirect('/admin')
             }
         })
@@ -223,11 +218,11 @@ module.exports = {
     //Category
     getCategory: (req, res) => {
         Category.find().
-            then(data => {
-                res.render('listCategory', {
-                    listCategory: data
-                });
-            })
+        then(data => {
+            res.render('listCategory', {
+                listCategory: data
+            });
+        })
     },
     getAddCategory: (req, res) => {
         res.render('addCategory');
@@ -246,8 +241,7 @@ module.exports = {
                 res.redirect('/admin/category')
             }
         })
-    }
-    ,
+    },
     getEditCategory: (req, res) => {
         Category.findById(req.params.id, (err, data) => {
             if (err) {
@@ -285,8 +279,7 @@ module.exports = {
                     err: 0,
                     msg: err
                 })
-            }
-            else {
+            } else {
                 res.redirect('/admin/category')
             }
         })

@@ -9,27 +9,27 @@ const multer = require('multer');
 const { response } = require('express');
 
 let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         // đường dẫn nó up lên
         cb(null, 'public/upload')
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         // tránh up trùng file
         cb(null, Date.now() + "-" + file.originalname)
     }
 });
 let upload = multer({
     storage: storage,
-    fileFilter: function (req, file, cb) {
-        console.log(file);
-        //những loại file được phép upload
-        if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-            cb(null, true)
-        } else {
-            return cb(new Error('Only image are allowed!'))
+    fileFilter: function(req, file, cb) {
+            console.log(file);
+            //những loại file được phép upload
+            if (file.mimetype == "image/bmp" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+                cb(null, true)
+            } else {
+                return cb(new Error('Only image are allowed!'))
+            }
         }
-    }
-    //name bên upload
+        //name bên upload
 }).single("avatar");
 
 module.exports = {
@@ -51,47 +51,46 @@ module.exports = {
             } else {
                 //tìm username với email trên database
                 UserModel.findOne({
-                    $or: [
-                        { username: req.body.username },
-                        { email: req.body.email }
-                    ]
-                })
-                .then(data => {
-                    //nếu tồn tại email
-                    if (data) {
+                        $or: [
+                            { username: req.body.username },
+                            { email: req.body.email }
+                        ]
+                    })
+                    .then(data => {
+                        //nếu tồn tại email
+                        if (data) {
+                            res.json({
+                                error: true,
+                                msg: 'Email hoặc username đã có người đăng kí',
+                            })
+                        }
+                        //nếu tồn tại password
+                        //không tồn tại
+                        else {
+                            bcrypt.hash(req.body.password, 10, function(err, hash) {
+                                return UserModel.create({
+                                        name: req.body.name,
+                                        email: req.body.email,
+                                        username: req.body.username,
+                                        password: hash, // password bây giờ sẽ bằng đoạn mã hóa 
+                                        address: req.body.address,
+                                        phone: req.body.phone,
+                                        image: req.file.filename
+                                    })
+                                    .then(data => {
+                                        res.redirect('/account/login')
+                                    })
+                            })
+                        }
+                    })
+                    .catch(err => {
                         res.json({
                             error: true,
-                            msg: 'Email hoặc username đã có người đăng kí',
+                            msg: 'Tạo tài khoản thất bại' + err
                         })
-                    }
-                    //nếu tồn tại password
-                    //không tồn tại
-                    else {
-                        bcrypt.hash(req.body.password, 10, function (err, hash) {
-                            return UserModel.create({
-                                name: req.body.name,
-                                email: req.body.email,
-                                username: req.body.username,
-                                password: hash, // password bây giờ sẽ bằng đoạn mã hóa 
-                                address: req.body.address,
-                                phone: req.body.phone,
-                                image: req.file.filename
-                            })
-                            .then(data => {
-                                res.redirect('/account/login')
-                            })
-                        })
-                    }
-                })
-                .catch(err => {
-                    res.json({
-                        error: true,
-                        msg: 'Tạo tài khoản thất bại' + err
                     })
-                })
             }
         })
-        
     },
     getLogin: (req, res) => {
         res.render('login');
@@ -108,8 +107,7 @@ module.exports = {
                             error: true,
                             msg: 'Sai password'
                         })
-                    }
-                    else {                          
+                    } else {
                         req.session.userId = user._id
                         res.redirect('/admin')
                     }
@@ -126,18 +124,77 @@ module.exports = {
         req.session.destroy(() => {
             res.redirect('/account/login')
         })
+    },
+    getEditProfile: (req, res) => {
+        res.render('editProfile')
+    },
+    postEditProfile: (req, res) => {
+        //req.body || req.file gọi bên trong upload vì dùng multer vì form có ectype
+        // xử lí upload file (Check xem khách hàng có chọn file mới hay không ?)
+        upload(req, res, err => {
+            //1. Không có file mới , update mấy cái kia , k update image
+            if (!req.file) {
+                bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
+                    UserModel.updateOne({
+                        _id: req.body.idUser
+                    }, {
+                        name: req.body.name,
+                        email: req.body.email,
+                        username: req.body.username,
+                        password: hash,
+                        address: req.body.address,
+                        phone: req.body.phone,
+                    }, err => {
+                        if (err) {
+                            res.json({
+                                error: 0,
+                                msg: err
+                            })
+                        } else {
+                            // nếu không có lỗi sẽ chuyển hướng qua trang home
+                            res.redirect('/')
+                        }
+                    })
+                })
+                // có update image mới
+            } else {
+                if (err instanceof multer.MulterError) {
+                    res.json({
+                        error: 0,
+                        msg: "A Multer error occurred when uploading"
+                    })
+                } else if (err) {
+                    res.json({
+                        error: 0,
+                        msg: "An unknown error occurred when uploading." + err
+                    })
+                } else {
+                    // khi người dùng chọn file hơạc password
+                    bcrypt.hash(req.body.newPassword, 10, function(err, hash) {
+                        UserModel.updateOne({
+                            _id: req.body.idUser
+                        }, {
+                            name: req.body.name,
+                            email: req.body.email,
+                            username: req.body.username,
+                            password: hash,
+                            address: req.body.address,
+                            phone: req.body.phone,
+                            image: req.file.filename
+                        }, err => {
+                            if (err) {
+                                res.json({
+                                    error: 0,
+                                    msg: err
+                                })
+                            } else {
+                                // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
+                                res.redirect('/')
+                            }
+                        })
+                    })
+                }
+            }
+        })
     }
 }
-
-// let b = a => {
-//     jwt.sign(user.toJSON(), secret, { expiresIn: '168h' }, (err, token) => {
-//         if (err) {
-//             res.json({
-//                 error: true,
-//                 msg: 'Token generate error ' + err
-//             })
-//         } else {
-//             req.session.token = token;
-//         }
-//     })
-// }
