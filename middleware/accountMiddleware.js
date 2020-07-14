@@ -22,21 +22,4 @@ module.exports = {
             next();
         } 
      }
-    //  , isLogin : (req, res, next) => {
-    //      if (req.session.token) {
-    //          jwt.verify(req.session.token, secret, (err, decode) => {
-    //              if (err) {
-    //                  res.redirect('/account/login')
-    //              } else {
-    //                 res.redirect('/');
-    //                 next();
-    //              }
-    //          })
-    //      } else {
-    //          res.redirect('/account/login')
-    //      }
-    //  }
-
-
-
 }
