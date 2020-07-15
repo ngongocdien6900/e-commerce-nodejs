@@ -280,7 +280,19 @@ module.exports = {
                     msg: err
                 })
             } else {
-                res.redirect('/admin/category')
+                ProductModel.deleteMany({
+                    categories : req.params.id
+                }, err => {
+                    if (err) {
+                        res.json({
+                            err: 0,
+                            msg: err
+                        })
+                    }else {
+                        res.redirect('/admin/category')
+                    }
+                })
+                
             }
         })
     }

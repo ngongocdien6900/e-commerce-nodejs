@@ -103,11 +103,13 @@ module.exports = {
             if (!err && user != null) {
                 bcrypt.compare(req.body.password, user.password, (err2, result) => {
                     if (result == false) {
+                        
                         res.json({
                             error: true,
                             msg: 'Sai password'
                         })
                     } else {
+                        
                         req.session.userId = user._id
                         res.redirect('/admin')
                     }
