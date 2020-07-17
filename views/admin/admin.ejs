@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/admin/header.ejs'); -%>
+
+<body class="goto-here">
+	<!-- Start nav -->
+	<%- include('../layouts/admin/nav.ejs'); -%>
+	<!-- END nav -->
+	<section class="ftco-section main_admin_v2">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+					<!-- Start nav_vertical -->
+					<%- include('../layouts/admin/nav_vertical.ejs'); -%>
+					<!-- End nav_vertical -->
+				</div>
+				<div class="col pt-2">
+					<!-- Thống kê sản phẩm, tài khoản người dùng,... -->
+					<div class="thongKe">
+						<div class="row">
+							<!-- Tổng sản phẩm đi-->
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-4 icon"><i class="ion-ios-nutrition"></i></div>
+									<div class="col-md-8">
+										<div class="stats">
+											<div class="value">
+												<%= product %>
+											</div>
+											<div class="name">Tổng Sản Phẩm</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Tổng Danh Mục (tài khoản)-->
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-4 icon"><i class="ion-ios-pricetags"></i></div>
+									<div class="col-md-8">
+										<div class="stats">
+											<div class="value">
+												<%= category %>
+											</div>
+											<div class="name">Tổng Danh Mục</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Tổng người dùng -->
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-4 icon"><i class="ion-ios-people"></i></div>
+									<div class="col-md-8">
+										<div class="stats">
+											<div class="value">
+												<%= user %>
+											</div>
+											<div class="name">Tổng Người Dùng</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="row">
+									<div class="col-md-4 icon"><i class="ion-ios-eye"></i></div>
+									<div class="col-md-8">
+										<div class="stats">
+											<div class="value">
+												None
+											</div>
+											<div class="name">Tổng Lượt Truy Cập</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Start Footer -->
+	<%- include('../layouts/admin/footer.ejs'); -%>
+	<!-- End -->
+
+	<!-- loader -->
+	<%- include('../layouts/admin/loader.ejs'); -%>
+	<!-- end -->
+
+	<!-- Start Script -->
+	<%- include('../layouts/admin/script.ejs'); -%>
+	<!-- End -->
+
+</body>
+
+</html>

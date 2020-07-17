@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('layouts/header'); -%>
+<%- include('./layouts/header'); -%>
 
 <body class="goto-here">
 	<!-- Start nav -->
@@ -113,13 +113,17 @@
 							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
 								style="background-image: url(./public/images/category-1.jpg);">
 								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="#">Rau</a></h2>
+									<h2>
+										A
+									</h2>
 								</div>
 							</div>
 							<div class="category-wrap ftco-animate img d-flex align-items-end"
 								style="background-image: url(./public/images/category-2.jpg);">
 								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="#">Trái Cây</a></h2>
+									<h2>
+										A
+									</h2>
 								</div>
 							</div>
 						</div>
@@ -130,13 +134,13 @@
 					<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
 						style="background-image: url(./public/images/category-3.jpg);">
 						<div class="text px-3 py-1">
-							<h2 class="mb-0"><a href="#">Nước Ép</a></h2>
+							<h2>A</h2>
 						</div>
 					</div>
 					<div class="category-wrap ftco-animate img d-flex align-items-end"
 						style="background-image: url(./public/images/category-4.jpg);">
 						<div class="text px-3 py-1">
-							<h2 class="mb-0"><a href="#">Hạt</a></h2>
+							<h2>A</h2>
 						</div>
 					</div>
 				</div>
@@ -155,31 +159,43 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<% for(let i = 0; i < product.length; i++) { %>
+				<% for(let i = 0 ; i < randomProduct.length; i++) { %>
 				<div class="col-md-6 col-lg-3 ftco-animate">
 					<div class="product">
-						<a href="/sanpham/<%- product[i]._id %>" class="img-prod"><img class="img-fluid" src="./public/upload/<%- product[i].image %>"
-								alt="Colorlib Template">
+						<a href="/sanpham/<%= randomProduct[i]._id %>" class="img-prod"><img class="img-fluid"
+								src="./public/upload/<%- randomProduct[i].image %>" alt="Colorlib Template">
 							<div class="overlay"></div>
 						</a>
 						<div class="text py-3 pb-4 px-3 text-center">
-							
-							<h3><a href="/sanpham/<%- product[i]._id %>" style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
+							<h3><a href="/sanpham/<%= randomProduct[i]._id %>"
+									style="font-weight: bold; color:#393838"><%= randomProduct[i].productName.slice(0,18) %> [...]</a></h3>
 							<div class="d-flex">
 								<div class="pricing">
-									<p class="price"><span class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %> VNĐ</span></p>
+									<p class="price"><span
+											class="price-sale"><%=String(randomProduct[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
+											VNĐ</span></p>
+								</div>
+							</div>
+							<div class="d-flex">
+								<div class="description">
+									<p class="desc"> <%= randomProduct[i].description.slice(0,45) %> [...]</p>
+								</div>
+							</div>
+							<div class="d-flex">
+								<div class="pricing">
+									<p class="price quality"> <%= randomProduct[i].quality %> Kg</p>
 								</div>
 							</div>
 							<div class="bottom-area d-flex px-3">
 								<div class="m-auto d-flex">
-									<a href="/sanpham/<%- product[i]._id %>"
-										class="add-to-cart d-flex justify-content-center align-items-center text-center">
-										<span><i class="ion-ios-menu"></i></span>
+									<a href="/sanpham/<%- randomProduct[i]._id %>" 
+										class="add-to-cart d-flex justify-content-center align-items-center text-center" title="Chi tiết sản phẩm">
+										<span><i class="ion-ios-book"></i></span>
 									</a>
-									<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+									<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1" title="Thêm vào giỏ hàng">
 										<span><i class="ion-ios-cart"></i></span>
 									</a>
-									<a href="#" class="heart d-flex justify-content-center align-items-center ">
+									<a href="#" class="heart d-flex justify-content-center align-items-center" title="Thích sản phẩm">
 										<span><i class="ion-ios-heart"></i></span>
 									</a>
 								</div>
@@ -187,9 +203,9 @@
 						</div>
 					</div>
 				</div>
-				<% } %>
+			<% }%>
 			</div>
-			
+			<p class="text-center"><a href="/sanpham" class="btn btn-primary">Xem Thêm</a></p>
 		</div>
 
 		<!-- Start Footer -->

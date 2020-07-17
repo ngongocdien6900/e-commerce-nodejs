@@ -5,81 +5,109 @@
 <!-- End -->
 
 <body class="goto-here">
-	<!-- Start nav -->
-	<%- include('./layouts/nav.ejs'); -%>
-	<!-- END nav -->
+    <!-- Start nav -->
+    <%- include('./layouts/nav.ejs'); -%>
+    <!-- END nav -->
+
+    <div class="hero-wrap hero-bread" style="background-image: url('/public/images/bg_1.jpg');">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center">
+                <div class="col-md-9 ftco-animate text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span>
+                    </p>
+                    <h1 class="mb-0 bread">Products</h1>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-10 mb-5 text-center">
-					<ul class="product-category">
-						<!-- danh mục sản phẩm -->
-						<li><a href="/sanpham" class="active">All</a></li>
-						<% category.forEach(cha => { %>
-							<li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-cha.categoryName %></a></li>
-						<% }) %>
-					</ul>
-					<form action="/sanpham" method="GET">
-						<input type="text" name="search" placeholder="Tìm kiếm">
-						<input type="submit" value="Search">
-					</form>
-				</div>
-			</div>
-			<div class="row">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 mb-5 text-center">
+                    <ul class="product-category">
+                        <!-- danh mục sản phẩm -->
+                        <li><a href="/sanpham" class="active">Tất Cả  <%- '(' + product.length + ')' %></a></li>
+                        <% category.forEach(cha => { %>
+                        <li><a href="/sanpham/danhmuc/<%- cha._id %>"><%-cha.categoryName %></a></li>
+                        <% }) %>
+                    </ul>
+                    <!-- Tìm kiếm  -->
+					<div class="timSP">
+						<form action="/sanpham" method="GET" class="my-2 my-lg-0 timKiem"> 
+                            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Tìm Kiếm">
+                            <br>
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+						</form>
+					</div>
+                </div>
+            </div>
+            <div class="row">
                 <% for(let i = 0; i < product.length; i++) { %>
-                        <div class="col-md-6 col-lg-3 ftco-animate">
-                            <div class="product">
-                                <a href="/sanpham/<%= product[i]._id %>" class="img-prod"><img class="img-fluid"
-                                        src="./public/upload/<%- product[i].image %>" alt="Colorlib Template">
-                                    <div class="overlay"></div>
-                                </a>
-                                <div class="text py-3 pb-4 px-3 text-center">
-
-                                    <h3><a href="/sanpham/<%= product[i]._id %>"
-                                            style="font-weight: bold; color:#393838"><%= product[i].productName %></a></h3>
-                                    <div class="d-flex">
-                                        <div class="pricing">
-                                            <p class="price"><span
-                                                    class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
-                                                    đ</span></p>
-                                        </div>
-                                    </div>
-                                    <div class="bottom-area d-flex px-3">
-                                        <div class="m-auto d-flex">
-                                            <a href="/sanpham/<%= product[i]._id %>"
-                                                class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                                <span><i class="ion-ios-menu"></i></span>
-                                            </a>
-                                            <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                                <span><i class="ion-ios-cart"></i></span>
-                                            </a>
-                                            <a href="#" class="heart d-flex justify-content-center align-items-center ">
-                                                <span><i class="ion-ios-heart"></i></span>
-                                            </a>
-                                        </div>
-                                    </div>
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="/sanpham/<%= product[i]._id %>" class="img-prod"><img class="img-fluid"
+                                src="/public/upload/<%- product[i].image %>" alt="Colorlib Template">
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="/sanpham/<%= product[i]._id %>"
+                                    style="font-weight: bold; color:#393838"><%= product[i].productName.slice(0,18) %> [...] %></a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span
+                                            class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
+                                            đ</span></p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="description">
+                                    <p class="desc"> <%= product[i].description.slice(0,45) %> [...]</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price quality"> <%= product[i].quality %> Kg</p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="/sanpham/<%- product[i]._id %>"
+                                        class="add-to-cart d-flex justify-content-center align-items-center text-center"
+                                        title="Chi tiết sản phẩm">
+                                        <span><i class="ion-ios-book"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1"
+                                        title="Thêm vào giỏ hàng">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="#" class="heart d-flex justify-content-center align-items-center"
+                                        title="Thích sản phẩm">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
-				<% } %>
-			</div>
-			
-		</div>
-	</section>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+
+        </div>
+    </section>
 
 
-		<!-- Start footer -->
-        <%- include('./layouts/footer.ejs'); -%>
-        <!-- End -->
+    <!-- Start footer -->
+    <%- include('./layouts/footer.ejs'); -%>
+    <!-- End -->
 
 
 
 
 
-	<!-- Start script -->
-	<%- include('./layouts/script.ejs'); -%>
-	<!-- End script -->
+    <!-- Start script -->
+    <%- include('./layouts/script.ejs'); -%>
+    <!-- End script -->
 
 
 </body>

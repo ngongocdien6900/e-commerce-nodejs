@@ -21,7 +21,7 @@ const ProductSchema = new Schema({
     },
     image : {
         type : String,
-        default : 'Hình ảnh'
+        default : 'person_2.jpg'
     },
     categories : {
             type : mongoose.Schema.Types.ObjectId,

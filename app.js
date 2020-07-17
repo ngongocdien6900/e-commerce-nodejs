@@ -49,6 +49,10 @@ app.set('views', './views');
 global.loggedIn = null;
 app.use("*", checkRole.isLogged);
 
+global.role = null;
+app.use("/account/editProfile", checkRole.isLoggedRole, accountRouter);
+app.use("pagenotfound", checkRole.isLoggedRole, accountRouter);
+
 app.use('/account', accountRouter);
 app.use('/sanpham', shopRouter);
 app.use('/contact', contactRouter);
@@ -57,6 +61,8 @@ app.use('/', homeRouter);
 app.use('/admin', checkRole.checkRole, adminRouter);
 app.use('/cart', cartRouter);
 
+// Chuyển trang không tìm thấy 404
+app.use((req, res) => res.render('pagenotfound'));
 
 app.listen(port, () => {
     console.log(`Sever listening on port ${port}`);

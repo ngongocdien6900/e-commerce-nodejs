@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('layouts/header'); -%>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <% if(role != 1) {%>
+    <%- include('./layouts/admin/nav.ejs') %>
+    <% } %>
+    <% if(role == 0) {%>
+    <%- include('./layouts/nav.ejs') %>
+    <% } %>
+    <!-- END nav -->
+
+    <section class="masthead" style="background-image: url('../public/images/bg_3.jpg');
+   padding: 15rem 0; text-align: center; font-weight: bold;
+   font-size: 48px;
+   ">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <div class="page-heading">
+                        <p>404 Page Not Found</p>
+                        <% if(role != 1) {%>
+                        <button class="btn btn-primary"><a href="/admin">Trang Chủ</a></button>
+                        <% } %>
+                        <% if(role == 0) {%>
+                        <button class="btn btn-primary"><a href="/">Trang Chủ</a></button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Start Footer -->
+    <%- include('./layouts/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('./layouts/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('./layouts/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+
+</html>

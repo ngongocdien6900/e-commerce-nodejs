@@ -3,9 +3,11 @@ const route = express.Router();
 const adminController = require('../controllers/adminController');
 const userModel = require('../model/UserModel');
 
+//admin
+route.get('/', adminController.getHomeAdmin);
 //Product
 //hiển thị danh sách sản phẩm
-route.get('/', adminController.getProduct);
+route.get('/listProduct', adminController.getProduct);
 //thêm 
 route.get('/add', adminController.getAddProduct);
 route.post('/add', adminController.postAddProduct);

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../layouts/admin/header.ejs') %>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <% if(role == 1) {%>
+        <%- include('../layouts/admin/nav.ejs') %>
+    <% } %>
+    <% if(role != 1) {%>
+        <%- include('../layouts/nav.ejs') %>
+    <% } %>
+    <!-- END nav -->
+    <!--================editProfile_part Area =================-->
+    <div class="container">
+        <section class="ftco-section">
+            <div class="row">
+                <!-- lựa chọn -->
+                <div class="col-md-4 pro">
+                    <p class="usn" style="color: #28a754;"><%- dataUser.name %></p>
+                    <ul>
+                        <li>
+                            <p class="option"><a href="account/editProfile"><i class="ion-ios-easel"></i> Thông tin tài
+                                    khoản</a></a></p>
+                        </li>
+                        <li>
+                            <p class="option"><a href="/account/logout"><i class="ion-ios-log-out"></i> Đăng Xuất</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Thông tin tài khoản -->
+                <div class="col-md-7 pro">
+                    <h2>Thông tin tài khoản</h2>
+                    <div class="profile">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <form action="/account/editProfile" method="POST" enctype="multipart/form-data">
+                                    <!-- hidden nó sẽ không hiện ra màn hình , 
+                                1. Đầu tiên , không ai đi hiện id ra , nên sẽ hidden đi
+                                2. Sẽ dùng nó để truyền id qua bên kia , để biết nó sẽ update thằng nào
+                                -->
+                                    <input type="hidden" name="idUser" value="<%- dataUser._id %>" required />
+                                    <label for="name">Họ và Tên:</label>
+                                    <input type="text" name="name" placeholder="Họ tên" value="<%-dataUser.name %>"
+                                        required />
+                                    <label for="email">Email:</label>
+                                    <input type="text" name="email" placeholder="Địa chỉ email"
+                                        value="<%- dataUser.email %>" required 
+                                        pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+                                        /></br>
+                                    <label for="username">Tên Tài Khoản:</label>
+                                    <input type="text" name="username" placeholder="Tên đăng nhập"
+                                        value="<%-dataUser.username %>" readonly />
+                                    <label for="re_NewPassword">Mật Khẩu Cũ:</label>
+                                    <input type="password" name="oldPassword" placeholder="Nhập lại mật khẩu"
+                                        required />
+                                    <label for="newPassword">Mật Khẩu Mới:</label>
+                                    <input type="password" name="newPassword" placeholder="Mật khẩu mới" />
+                                    <label for="address">Địa Chỉ:</label>
+                                    <input type="text" name="address" placeholder="Địa chỉ nhà"
+                                        value="<%-dataUser.address %>" required />
+                                    <label for="phone">Số Điện Thoại:</label>
+                                    <input type="number" name="phone" placeholder="Số điện thoại"
+                                        value="<%-dataUser.phone %>" required />
+                                    </br>
+                                    <img src="/public/upload/<%- dataUser.image %>" alt="" class="img-fluid"
+                                        width="100">
+                                    <input type="file" name="avatar"></br>
+                                    </br>
+                                    <!-- Khi bấm nút sửa , cái route này sẽ post dữ liệu về đường dẫn mà mình khai báo ở action -->
+                                    <button class="btn btn-primary" type="submit">Sửa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </section>
+    </div>
+    <!--================editProfile_part end =================-->
+
+    <!-- Start Footer -->
+    <%- include('../layouts/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('../layouts/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('../layouts/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/admin/header'); -%>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <%- include('../layouts/admin/nav.ejs'); -%>
+    <!-- END nav -->
+    <section class="ftco-section main_admin">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+                    <!-- Start nav_vertical -->
+                    <%- include('../layouts/admin/nav_vertical.ejs'); -%>
+                    <!-- End nav_vertical -->
+                </div>
+                <div class="col pt-2" style="background: #f7f6f2;border-radius: 20px;">
+                    <!-- List Product -->
+                    <div class="container">
+                        <h1 style="text-align: center;color: #28a745;font-weight: bold;padding: 1rem;">
+                            Danh Mục Sản Phẩm (Admin)
+                        </h1>
+                        <form action="/admin/category" method="GET" class="form-inline my-2 my-lg-0 timKiem"> 
+							<input class="form-control mr-sm-2" type="text" name="search" placeholder="Tìm Kiếm Danh Mục">
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+						</form>
+                        <div style="text-align: right;padding-bottom: 1rem;" class="btnThemSP"><button
+                                class="btn btn-primary"><a href="admin/addCategory">Thêm DM</a></button></div>
+                        <div class="row">
+                            <% for(let i = 0; i < listCategory.length; i++) {%>
+                            <div class="col-md-6 col-lg-3 ftco-animate">
+								<div class="product">
+									<a href="#" class="img-prod"><img class="img-fluid" src="../public/images/bg_3.jpg %>"
+											alt="Colorlib Template">
+										<div class="overlay"></div>
+									</a>
+									<div class="text py-3 pb-4 px-3 text-center">
+										<h3><a href="#" style="font-weight: bold; color:#393838"><%= listCategory[i].categoryName %></a></h3>
+										<div class="bottom-area d-flex px-3">
+											<div class="m-auto d-flex">
+												<a  onclick="return confirm('Bạn có muốn xóa danh mục <%= listCategory[i].categoryName %> không ?')"
+											href="/admin/deleteCategory/<%= listCategory[i]._id %>" class="buy-now d-flex justify-content-center align-items-center mx-1" title="Xóa danh mục">
+												<span> <i class="ion-ios-trash"></i></span>
+											</a>
+											<a href="admin/editCategory/<%= listCategory[i]._id %>" class="heart d-flex justify-content-center align-items-center " title="Sửa danh mục">
+												<span><i class="ion-ios-create"></i></span>
+                                            </a>
+                                            </div>
+											</div>
+										</div>
+									</div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    
+                    </div>
+
+                </div>
+    </section>
+    <!-- Start Footer -->
+    <%- include('../layouts/admin/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('../layouts/admin/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('../layouts/admin/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/header'); -%>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <%- include('../layouts/nav.ejs'); -%>
+    <!-- END nav -->
+    <!--================register_part Area =================-->
+    <section class="login_part section_padding">
+        <div class="container">
+            <div class="header  text-center">
+                <h1 class="mb-2">Đăng Kí</h1>
+                <button class="btn btn-primary"><a href="#">FaceBook</a></button>
+                <p>Hoặc</p>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-12 col-md-12">
+                    <div class="login_part_form">
+                        <div class="login_part_form_iner">
+                            <form class="form" action="/account/register" method="post" novalidate="novalidate"
+                                enctype="multipart/form-data">
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="text" class="form-control" id="name" name="name" value=""
+                                        placeholder="Họ Tên" required>
+                                </div>
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="text" class="form-control" id="email" name="email" value=""
+                                        placeholder="Địa chỉ email"
+                                        pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" required>
+                                </div>
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="text" class="form-control" id="username" name="username" value=""
+                                        placeholder="Tên đăng nhập" required>
+                                </div>
+
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="password" class="form-control" id="password" name="password" value=""
+                                        placeholder="Mật khẩu" required>
+                                </div>
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="password" class="form-control" id="confirm_password"
+                                        name="confirm_password" value="" placeholder="Nhập lại mật khẩu" required>
+                                </div>
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="text" class="form-control" id="address" name="address" value=""
+                                        placeholder="Địa chỉ nhà">
+                                </div>
+                                <div class="col-md-12 form-group inputBox">
+                                    <input type="number" class="form-control" id="phone" name="phone" value=""
+                                        placeholder="Số điện thoại ">
+                                </div>
+                                <input type="file" name="avatar">
+                                </br>
+                                <div class="col-md-12 form-group">
+                                    <button type="submit" value="submit" class="btnRegister">Đăng Kí</button>
+                                    <p class="forgetPassword">Bạn đã có tài khoản ? Trở lại trang <a class="lost_pass"
+                                            href="/account/login">Đăng Nhập</a></p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================register_part end =================-->
+
+    <!-- Start Footer -->
+    <%- include('../layouts/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('../layouts/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('../layouts/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+</html>

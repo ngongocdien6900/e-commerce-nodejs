@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/admin/header'); -%>
+
+<body class="goto-here">
+	<!-- Start nav -->
+	<%- include('../layouts/admin/nav.ejs'); -%>
+	<!-- END nav -->
+	<section class="ftco-section main_admin">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+					<!-- Start nav_vertical -->
+                    <%- include('../layouts/admin/nav_vertical.ejs'); -%>
+                    <!-- End nav_vertical -->
+				</div>
+				<div class="col pt-2" style="background: #f7f6f2;border-radius: 20px;">
+					<!-- List Product -->
+					<div class="container">
+						<h1 style="text-align: center;color: #28a745;font-weight: bold;">
+							Danh Sách Sản Phẩm (Admin)
+						</h1>
+						<div class="timKiemSP" style="margin-bottom: 1rem;">
+							<form action="/admin/listProduct" method="GET" class="form-inline my-2 my-lg-0 timKiem" >
+								<input class="form-control mr-sm-2" type="text" name="search" placeholder="Tìm Kiếm" >
+								<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+							</form>
+						</div>
+						<div class="row">
+							<% for(let i = 0; i < product.length; i++) { %>
+							<div class="col-md-6 col-lg-3 ftco-animate">
+								<div class="product">
+									<a href="/sanpham/<%- product[i]._id %>" class="img-prod"><img class="img-fluid"
+											src="../public/upload/<%- product[i].image %>" alt="Colorlib Template">
+										<div class="overlay"></div>
+									</a>
+									<div class="text py-3 pb-4 px-3 text-center">
+										<h3><a href="/sanpham/<%- product[i]._id %>"
+												style="font-weight: bold; color:#393838"><%= product[i].productName.slice(0,18) %> [...] %></a>
+										</h3>
+										<div class="d-flex">
+											<div class="pricing">
+												<p class="price"><span
+														class="price-sale"><%=String(product[i].price).replace(/(.)(?=(\d{3})+$)/g,'$1,') %>
+														VNĐ</span></p>
+											</div>
+
+										</div>
+										<div class="d-flex">
+											<div class="description">
+												<p class="desc"> <%= product[i].description.slice(0,45) %> [...]</p>
+											</div>
+										</div>
+										<div class="d-flex">
+											<div class="pricing">
+												<p class="price quality"> <%= product[i].quality %> Kg</p>
+											</div>
+										</div>
+										<div class="bottom-area d-flex px-3">
+											<div class="m-auto d-flex">
+												<a onclick="return confirm('Bạn có muốn xóa sản phẩm <%= product[i].productName %> không ?')"
+													href="/admin/delete/<%= product[i].id %>"
+													class="buy-now d-flex justify-content-center align-items-center mx-1"
+													title="Xóa sản phẩm">
+													<span> <i class="ion-ios-trash"></i></span>
+												</a>
+												<a href="admin/edit/<%= product[i]._id %>"
+													class="heart d-flex justify-content-center align-items-center "
+													title="Sửa sản phẩm">
+													<span><i class="ion-ios-create"></i></span>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<% } %>
+						</div>
+						<div class="row mt-5">
+							<div class="col text-center">
+								<div class="block-27">
+									<ul>
+										<!-- <li><a href="#">&lt;</a></li> -->
+										<% for(let i = 1 ; i <= totalPage; i++) { %>
+										<li><span><a href="admin/listProduct?page=<%- i %>"><%- i %></a></span></li>
+										<% }%>
+										<!-- <li><a href="#">&gt;</a></li> -->
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Start Footer -->
+	<%- include('../layouts/admin/footer.ejs'); -%>
+	<!-- End -->
+
+	<!-- loader -->
+	<%- include('../layouts/admin/loader.ejs'); -%>
+	<!-- end -->
+
+	<!-- Start Script -->
+	<%- include('../layouts/admin/script.ejs'); -%>
+	<!-- End -->
+
+</body>
+
+</html>

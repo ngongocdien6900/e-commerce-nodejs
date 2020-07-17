@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/admin/header'); -%>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <%- include('../layouts/admin/nav.ejs'); -%>
+    <!-- END nav -->
+    <section class="ftco-section main_admin">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+                    <!-- Start nav_vertical -->
+                    <%- include('../layouts/admin/nav_vertical.ejs'); -%>
+                    <!-- End nav_vertical -->
+                </div>
+                <div class="col pt-2" style="background: #f7f6f2;border-radius: 20px;">
+                    <div class="container">
+                        <!-- List Product -->
+                        <h1 style="text-align: center;color: #28a745;font-weight: bold;padding: 1rem;">
+                            Sửa Danh Sách Sản Phẩm
+                        </h1>
+                        <div class="suaSP" style="text-align: center;padding: 5rem;">
+                            <form action="/admin/edit" method="POST" enctype="multipart/form-data">
+                                <!-- hidden nó sẽ không hiện ra màn hình , 
+                                                    1. Đầu tiên , không ai đi hiện id ra , nên sẽ hidden đi
+                                                    2. Sẽ dùng nó để truyền id qua bên kia , để biết nó sẽ update thằng nào
+                                                    -->
+                                <input type="hidden" name="idProduct" value="<%- product._id %>" />
+                                <input type="text" name="productName" placeholder="Tên sản phẩm"
+                                    value="<%- product.productName %>" />
+                                </br>
+                                <input type="text" name="price" placeholder="Giá" value="<%- product.price %>" />
+                                </br>
+                                <input type="text" name="quality" placeholder="Số lượng (kg)"
+                                    value="<%- product.quality %>" />
+                                <br>
+                                <textarea name="description" placeholder="Mô tả"><%- product.description %></textarea>
+                                <br>
+                                <img src="/public/upload/<%- product.image %>" width="100" alt="">
+                                <input type="file" name="productImage">
+                                </br>
+                                
+                                </br>
+                                <!-- Khi bấm nút sửa , cái route này sẽ post dữ liệu về đường dẫn mà mình khai báo ở action -->
+                                <input class="btn btn-primary" type="submit" value="Sửa">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+    <!-- Start Footer -->
+    <%- include('../layouts/admin/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('../layouts/admin/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('../layouts/admin/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+</html>

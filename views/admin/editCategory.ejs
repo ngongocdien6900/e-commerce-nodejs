@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../layouts/admin/header'); -%>
+
+<body class="goto-here">
+    <!-- Start nav -->
+    <%- include('../layouts/admin/nav.ejs'); -%>
+    <!-- END nav -->
+    <section class="ftco-section main_admin">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+                    <!-- Start nav_vertical -->
+                    <%- include('../layouts/admin/nav_vertical.ejs'); -%>
+                    <!-- End nav_vertical -->
+                </div>
+                <div class="col pt-2" style="background: #f7f6f2;border-radius: 20px;">
+                    <!-- List Product -->
+                    <div class="container">
+                        <h1 style="text-align: center;color: #28a745;font-weight: bold;padding: 1rem;;;">
+                            Sửa Danh Mục Sản Phẩm
+                        </h1>
+                        <div class="addDM" style="text-align: center;font-size: 32px;padding: 5rem;">
+                            <form action="/admin/editCategory" method="post">
+                                <input type="hidden" name="idCategory" value="<%- category._id%>">
+                                <input type="text" value="<%- category.categoryName %>" name="category" placeholder="Thêm danh mục sản phẩm" /> <br>
+                                <input class="btn btn-primary" type="submit" value="Sửa">
+                            </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+    </section>
+    <!-- Start Footer -->
+    <%- include('../layouts/admin/footer.ejs'); -%>
+    <!-- End -->
+
+    <!-- loader -->
+    <%- include('../layouts/admin/loader.ejs'); -%>
+    <!-- end -->
+
+    <!-- Start Script -->
+    <%- include('../layouts/admin/script.ejs'); -%>
+    <!-- End -->
+
+</body>
+
+</html>

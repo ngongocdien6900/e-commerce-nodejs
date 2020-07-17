@@ -1,33 +1,56 @@
 const accountModel = require('../model/UserModel');
 
 module.exports = {
-    checkRole : (req, res, next) => {
+    checkRole: (req, res, next) => {
 
         accountModel.findOne({
-            _id : req.session.userId
+            _id: req.session.userId
         }, (err, data) => {
-            if(err) 
+            if (err)
                 throw err;
-            if(data) {
-                if(data.role == '1')
+            if (data) {
+                if (data.role == '1')
                     next()
-                else 
+                else
                     res.redirect('/')
-            }else {
+            } else {
                 res.redirect('/')
-            }    
+            }
         })
-    }, 
-    isLogged : (req, res, next) => {
+    },
+    isLogged: (req, res, next) => {
         //tìm thằng data tồn tại
         accountModel.findOne({
-            _id : req.session.userId
+            _id: req.session.userId
         })
-        .then(data => {
-            //gán data đó bằng biến dataUser
-            dataUser = data
-            loggedIn = req.session.userId;
-            next();
+            .then(data => {
+                //gán data đó bằng biến dataUser
+                dataUser = data
+                loggedIn = req.session.userId;
+                next();
+            })
+    },
+    isLoggedRole: (req, res, next) => {
+        //tìm thằng data tồn tại
+        accountModel.findOne({
+            _id: req.session.userId
         })
+            .then(data => {
+
+                if (data) {
+                    //gán data đó bằng biến dataUser
+                    dataUser = data
+                    if (data.role == '1') {
+                        role = req.session.role;
+                        next();
+                    }
+                    else {
+                        role = req.session.role;
+                        next();
+                    }
+                } else {
+                    res.redirect('/')
+                }
+            })
     }
 }

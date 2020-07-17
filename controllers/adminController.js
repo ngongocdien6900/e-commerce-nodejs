@@ -1,5 +1,7 @@
 const ProductModel = require('../model/ProductModel');
 const Category = require('../model/CategoryModel');
+const UserModel = require('../model/UserModel');
+
 
 const multer = require('multer');
 const { response } = require('express');
@@ -30,33 +32,81 @@ let upload = multer({
 
 module.exports = {
 
-    getProduct: (req, res) => {
+    getHomeAdmin: (req, res) => {
+        ProductModel.countDocuments({})
+            .then(product => {
+                UserModel.countDocuments({}).then(user => {
+                    Category.countDocuments({}).then(category => {
+                        res.render('admin/admin', {
+                            // truyền qua bên kia
+                            product, user, category
+                        })
+                    })
+                })
+
+            })
+    },
+    getProduct: async (req, res, next) => {
+        //số sản phẩm 1 trang
+        const PAGE_SIZE = 8;
+
+        //nếu có tìm kiếm
         if (req.query.search) {
             ProductModel.find({
                 productName: new RegExp(req.query.search)
+
             }, (err, product) => {
                 if (err) {
                     res.json({
                         error: 0,
-                        msg: err
+                        msg: err 
                     })
                 } else {
-                    res.render('admin', {
-                        // truyền qua bên kia
-                        product
+                    let totalPage = Math.ceil(product / PAGE_SIZE);
+                    let category = Category.aggregate([{
+                        $lookup: {
+                            //nhu ten db ben kia
+                            from: "product",
+                            localField: "products",
+                            foreignField: "_id",
+                            as: "listCategory"
+                        }
+                    }])
+                    res.render('admin/listProduct', {
+                        product, category, totalPage
                     })
+
                 }
             })
         } else {
-            ProductModel.find({})
-                .then(product => {
-                    res.render('admin', {
-                        // truyền qua bên kia
-                        product
-                    })
+            try {
+                // lấy page truyền trên thanh địa chỉ
+                let page = req.query.page;
+                //nếu có page truyền lên thì lấy giá trị đó. K có thì mặc định là 1
+                page ? req.query.page : page = 1
+                let skip = (page - 1) * PAGE_SIZE;
+                let product = await ProductModel.find({})
+                    .skip(skip)
+                    .limit(PAGE_SIZE)
+                let totalPage = await ProductModel.countDocuments({})
+                totalPage = Math.ceil(totalPage / PAGE_SIZE)
+                let category = await Category.aggregate([{
+                    $lookup: {
+                        //nhu ten db ben kia
+                        from: "product",
+                        localField: "products",
+                        foreignField: "_id",
+                        as: "listCategory"
+                    }
+                }])
+                res.render('admin/listProduct', {
+                    product, category, totalPage
                 })
-        }
+            } catch (err) {
+                res.json(err)
+            }
 
+        }
     },
     getAddProduct: (req, res) => {
         Category.find((err, data) => {
@@ -66,7 +116,7 @@ module.exports = {
                     msg: err
                 })
             } else {
-                res.render('addProduct', { data });
+                res.render('admin/addProduct', { data });
             }
         })
     },
@@ -112,7 +162,7 @@ module.exports = {
                                     msg: err
                                 })
                             } else {
-                                res.redirect('/admin')
+                                res.redirect('/admin/listProduct')
                             }
                         })
                     }
@@ -132,7 +182,7 @@ module.exports = {
                 }
                 // render ra trang edit và truyền kèm theo cái sản phẩm tìm ra đó
                 else {
-                    res.render('editProduct', {
+                    res.render('admin/editProduct', {
                         product
                     })
                 }
@@ -160,7 +210,7 @@ module.exports = {
                             })
                         } else {
                             // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
-                            res.redirect('/admin')
+                            res.redirect('/admin/listProduct')
                         }
                     })
                     // có update image mới
@@ -193,7 +243,7 @@ module.exports = {
                             })
                         } else {
                             // nếu không có lỗi sẽ chuyển hướng qua trang danh sách sản phẩm admin
-                            res.redirect('/admin')
+                            res.redirect('/admin/listProduct')
                         }
                     })
                 }
@@ -210,7 +260,7 @@ module.exports = {
                     msg: err
                 })
             } else {
-                res.redirect('/admin')
+                res.redirect('/admin/listProduct')
             }
         })
     },
@@ -219,13 +269,13 @@ module.exports = {
     getCategory: (req, res) => {
         Category.find().
         then(data => {
-            res.render('listCategory', {
+            res.render('admin/listCategory', {
                 listCategory: data
             });
         })
     },
     getAddCategory: (req, res) => {
-        res.render('addCategory');
+        res.render('admin/addCategory');
     },
     postAddCategory: (req, res) => {
         let category = new Category({
@@ -250,7 +300,7 @@ module.exports = {
                     msg: err
                 })
             } else {
-                res.render('editCategory', { category: data })
+                res.render('admin/editCategory', { category: data })
             }
         })
     },
